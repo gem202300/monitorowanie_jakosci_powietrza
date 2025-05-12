@@ -155,14 +155,14 @@ final class UserTable extends PowerGridComponent
     public function assignWorkerRoleAction($id): void
     {
         $this->authorize('update', Auth::user());
-        User::findOrFail($id)->assignRole(RoleType::WORKER->value);
+        User::findOrFail($id)->assignRole(RoleType::SERWISANT->value);
     }
 
     #[\Livewire\Attributes\On('removeWorkerRoleAction')]
     public function removeWorkerRoleAction($id): void
     {
         $this->authorize('update', Auth::user());
-        User::findOrFail($id)->removeRole(RoleType::WORKER->value);
+        User::findOrFail($id)->removeRole(RoleType::SERWISANT->value);
     }
 
     
