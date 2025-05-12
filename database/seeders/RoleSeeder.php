@@ -23,28 +23,20 @@ class RoleSeeder extends Seeder
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
 
         Role::create(['name' => RoleType::ADMIN]);
-        Role::create(['name' => RoleType::WORKER]);
+        Role::create(['name' => RoleType::SERWISANT]);
         Role::create(['name' => RoleType::USER]);
 
         // ADMINISTRATOR SYSTEMU
         $userRole = Role::findByName(RoleType::ADMIN->value);
         $userRole->givePermissionTo(PermissionType::USER_ACCESS->value);
         $userRole->givePermissionTo(PermissionType::USER_MANAGE->value);
-        $userRole->givePermissionTo(PermissionType::EVENT_ACCESS->value);
-        $userRole->givePermissionTo(PermissionType::EVENT_MANAGE->value);
-        $userRole->givePermissionTo(PermissionType::RESERBATION_ACCESS->value);
-        $userRole->givePermissionTo(PermissionType::RESERBATION_MANAGE->value);
+        //$userRole->givePermissionTo(PermissionType::EVENT_ACCESS->value);
+        //$userRole->givePermissionTo(PermissionType::EVENT_MANAGE->value);
+        //$userRole->givePermissionTo(PermissionType::RESERBATION_ACCESS->value);
+        //$userRole->givePermissionTo(PermissionType::RESERBATION_MANAGE->value);
         // PRACOWNIK
-        $userRole = Role::findByName(RoleType::WORKER->value);
-        $userRole->givePermissionTo(PermissionType::EVENT_ACCESS->value);
-        $userRole->givePermissionTo(PermissionType::EVENT_MANAGE->value);
-        $userRole->givePermissionTo(PermissionType::RESERBATION_ACCESS->value);
-        $userRole->givePermissionTo(PermissionType::RESERBATION_MANAGE->value);
+        $userRole = Role::findByName(RoleType::SERWISANT->value);
 
         // UŻYTKOWNIK
-        $userRole = Role::findByName(RoleType::USER->value);
-        //$userRole->givePermissionTo(PermissionType::USER_ACCESS->value);
-        $userRole->givePermissionTo(PermissionType::EVENT_ACCESS->value);
-        $userRole->givePermissionTo(PermissionType::RESERBATION_ACCESS->value);
     }
 }
