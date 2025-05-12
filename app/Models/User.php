@@ -69,7 +69,7 @@ class User extends Authenticatable implements MustVerifyEmail
    
     public function isWorker(): bool
     {
-        return $this->hasRole(RoleType::WORKER->value);
+        return $this->hasRole(RoleType::SERWISANT->value);
     }
 
    

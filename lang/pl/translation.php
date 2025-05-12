@@ -22,7 +22,7 @@ return [
     ],
     'roles' => [
         RoleType::ADMIN->value  => 'Administrator',
-        RoleType::WORKER->value => 'Pracownik',
+        RoleType::SERWISANT->value => 'Serwisant',
         RoleType::USER->value   => 'Użytkownik',
     ],
     'messages' => [
