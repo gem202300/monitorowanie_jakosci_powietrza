@@ -12,11 +12,28 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(PermissionSeeder::class);
-        $this->call(RoleSeeder::class);
-        $this->call(UserSeeder::class);
-        $this->call(EventSeeder::class);
-        $this->call(ReservationSeeder::class);
+        // Спочатку створюємо базові сутності
+        $this->call([
+            PermissionSeeder::class,
+            RoleSeeder::class,
+        ]);
 
+        $this->call(UserSeeder::class);
+
+
+        $this->call([
+            DevicesTableSeeder::class,
+            ParametersTableSeeder::class,
+        ]);
+
+        $this->call([
+            DeviceParametersTableSeeder::class,
+            UserDevicesTableSeeder::class,
+        ]);
+
+        $this->call([
+            MeasurementsTableSeeder::class,
+            MeasurementValuesTableSeeder::class,
+        ]);
     }
 }

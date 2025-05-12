@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
         ]);
 
         \App\Models\User::factory()->create([
-            'name' => 'Pracownik Testowy',
+            'name' => 'Serwisant Testowy',
             'email' => 'worker.test@localhost',
             'password' => Hash::make('12345678'),
             'phone' => '0987654321', 
