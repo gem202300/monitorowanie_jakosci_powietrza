@@ -25,10 +25,6 @@ Route::middleware(['auth'])->group(function () {
        
     });
 
-    Route::get('/devices', function () {
-    return view('devices.index');
-    })->name('devices.index');
-
     Route::prefix('users')->name('users.')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
     });

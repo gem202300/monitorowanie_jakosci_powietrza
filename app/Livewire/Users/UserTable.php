@@ -151,20 +151,6 @@ final class UserTable extends PowerGridComponent
         User::findOrFail($id)->removeRole(RoleType::ADMIN->value);
     }
 
-    #[\Livewire\Attributes\On('assignWorkerRoleAction')]
-    public function assignWorkerRoleAction($id): void
-    {
-        $this->authorize('update', Auth::user());
-        User::findOrFail($id)->assignRole(RoleType::SERWISANT->value);
-    }
-
-    #[\Livewire\Attributes\On('removeWorkerRoleAction')]
-    public function removeWorkerRoleAction($id): void
-    {
-        $this->authorize('update', Auth::user());
-        User::findOrFail($id)->removeRole(RoleType::SERWISANT->value);
-    }
-
     
     public function actions(User $user): array
     {
@@ -179,16 +165,7 @@ final class UserTable extends PowerGridComponent
                 ->tooltip(__('users.actions.remove_admin_role'))
                 ->class('text-green-500')
                 ->dispatch('removeAdminRoleAction', ['id' => $user->id]),
-            Button::add('assignWorkerRoleAction')
-                ->slot('<x-wireui-icon name="cube" class="w-5 h-5" mini />')
-                ->tooltip(__('users.actions.assign_worker_role'))
-                ->class('text-gray-500')
-                ->dispatch('assignWorkerRoleAction', ['id' => $user->id]),
-            Button::add('removeWorkerRoleAction')
-                ->slot('<x-wireui-icon name="cube" class="w-5 h-5" mini />')
-                ->tooltip(__('users.actions.remove_worker_role'))
-                ->class('text-green-500')
-                ->dispatch('removeWorkerRoleAction', ['id' => $user->id]),
+        
             Button::add('deleteUserAction')
                 ->slot('<x-wireui-icon name="trash" class="w-5 h-5" mini />')
                 ->tooltip(__('users.actions.delete'))
