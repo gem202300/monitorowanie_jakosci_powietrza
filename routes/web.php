@@ -3,6 +3,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\DeviceController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,9 +25,14 @@ Route::middleware(['auth'])->group(function () {
        
     });
 
+    Route::get('/devices', function () {
+    return view('devices.index');
+    })->name('devices.index');
+
     Route::prefix('users')->name('users.')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
     });
+
 });
 
 Route::middleware([
