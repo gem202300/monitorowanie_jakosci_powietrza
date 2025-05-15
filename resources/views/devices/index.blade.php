@@ -1,15 +1,17 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Devices') }}
-        </h2>
+        <div class="flex justify-between items-center">
+            <h2 class="text-xl font-semibold text-gray-800">Список пристроїв</h2>
+            <a href="{{ route('devices.create') }}"
+               class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded transition">
+                ➕ Додати пристрій
+            </a>
+        </div>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-2">
-                <livewire:devices.device-table />
-            </div>
+    <div class="py-6 max-w-7xl mx-auto">
+        <div class="bg-white p-4 rounded shadow">
+            <livewire:devices.device-table />
         </div>
     </div>
 </x-app-layout>

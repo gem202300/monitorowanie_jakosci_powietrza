@@ -15,11 +15,14 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
     });
 
-    Route::prefix('devices')->name('devices.')->group(function () {
-        Route::get('/', [DeviceController::class, 'index'])->name('index');
-    });
+Route::prefix('devices')->name('devices.')->group(function () {
+    Route::get('/', [DeviceController::class, 'index'])->name('index');
+    Route::get('/create', [DeviceController::class, 'create'])->name('create');
+    Route::get('/{device}/edit', [DeviceController::class, 'edit'])->name('edit');
+});
 
 });
+
 
 Route::middleware([
     'auth:sanctum',
