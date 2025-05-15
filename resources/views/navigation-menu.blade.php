@@ -22,10 +22,13 @@
                       <x-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('users.index')">
                           {{ __('translation.navigation.users') }}
                       </x-nav-link>
-                  @endif
+                  @endif    
 
-                 
-                 
+                  @if(Auth::user()->isAdmin())
+                    <x-nav-link href="{{ route('devices.index') }}" :active="request()->routeIs('devices.index')">
+                    {{ __('Devices') }}
+                    </x-nav-link>
+                    @endif
               </div>
           </div>
 

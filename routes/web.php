@@ -15,7 +15,10 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
     });
 
-    Route::get('/devices', [DeviceController::class, 'index'])->name('devices.index');
+    Route::prefix('devices')->name('devices.')->group(function () {
+        Route::get('/', [DeviceController::class, 'index'])->name('index');
+    });
+
 });
 
 Route::middleware([

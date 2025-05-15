@@ -8,4 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Device extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'status',
+        'address',
+        'longitude',
+        'latitude',
+    ];
+
+    protected $primaryKey = 'id';
+    public $incrementing = false;
 }

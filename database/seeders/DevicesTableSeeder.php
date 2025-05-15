@@ -11,7 +11,7 @@ class DevicesTableSeeder extends Seeder
     {
         DB::table('devices')->insert([
             [
-                'id' => 'dvc-001',
+                'id' => '1',
                 'name' => 'Weather Station Alpha',
                 'status' => 'active',
                 'address' => '123 Main St, Kyiv',
@@ -21,7 +21,7 @@ class DevicesTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id' => 'dvc-002',
+                'id' => '2',
                 'name' => 'Air Quality Monitor Beta',
                 'status' => 'active',
                 'address' => '456 Park Ave, Lviv',
@@ -31,7 +31,7 @@ class DevicesTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id' => 'dvc-003',
+                'id' => '3',
                 'name' => 'Water Sensor Gamma',
                 'status' => 'maintenance',
                 'address' => '789 River Rd, Odesa',
