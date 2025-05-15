@@ -9,21 +9,6 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-
-    Route::prefix('events')->name('events.')->group(function () {
-        Route::get('/', [EventController::class, 'index'])->name('index');
-        Route::get('/create', [EventController::class, 'create'])->name('create');
-        Route::post('/', [EventController::class, 'store'])->name('store');
-        Route::get('/{event}/edit', [EventController::class, 'edit'])->name('edit');
-        Route::put('/{event}', [EventController::class, 'update'])->name('update');
-    });
-
-    Route::prefix('reservations')->name('reservations.')->group(function () {
-        Route::get('/', [ReservationController::class, 'index'])->name('index');
-        Route::get('/{reservation}/edit', [ReservationController::class, 'edit'])->name('edit');
-       
-    });
-
     Route::prefix('users')->name('users.')->group(function () {
         Route::get('/', [UserController::class, 'index'])->name('index');
     });

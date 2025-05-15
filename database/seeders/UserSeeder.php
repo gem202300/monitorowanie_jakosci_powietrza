@@ -18,15 +18,8 @@ class UserSeeder extends Seeder
             'password' => Hash::make('12345678'),
             'phone' => '1234567890', 
             'address' => 'Test Address, 123', 
-        ]);
+        ])->assignRole(RoleType::USER->value);
 
-        \App\Models\User::factory()->create([
-            'name' => 'Serwisant Testowy',
-            'email' => 'worker.test@localhost',
-            'password' => Hash::make('12345678'),
-            'phone' => '0987654321', 
-            'address' => 'Worker Address, 456', 
-        ])->assignRole(RoleType::SERWISANT->value);
 
         \App\Models\User::factory()->create([
             'name' => 'Administrator Testowy',
