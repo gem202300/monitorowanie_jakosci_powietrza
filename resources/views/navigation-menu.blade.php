@@ -29,6 +29,9 @@
                     {{ __('Devices') }}
                     </x-nav-link>
                     @endif
+                    <x-nav-link href="{{ route('map') }}" :active="request()->routeIs('map')">
+                     {{ __('Mapa') }}
+                    </x-nav-link>
               </div>
           </div>
 
