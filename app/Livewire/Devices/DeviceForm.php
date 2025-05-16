@@ -38,8 +38,8 @@ class DeviceForm extends Component
             'name' => ['required', 'string', 'max:255'],
             'status' => ['required', 'in:active,maintenance,inactive'],
             'address' => ['required', 'string', 'max:255'],
-            'longitude' => ['required', 'numeric'],
-            'latitude' => ['required', 'numeric'],
+            'longitude' => ['required', 'numeric', 'min:-180', 'max:180'],
+            'latitude' => ['required', 'numeric', 'min:-90', 'max:90'],
         ];
     }
 
@@ -61,6 +61,9 @@ class DeviceForm extends Component
         } else {
             $this->authorize('create', Device::class);
         }
+
+        $this->longitude = str_replace(',', '.', $this->longitude);
+        $this->latitude = str_replace(',', '.', $this->latitude);
 
         $this->validate();
 

@@ -26,11 +26,12 @@
         <x-wireui-input label="{{ __('devices.attributes.address') }}" wire:model="address" placeholder="{{ __('Enter') }}" />
         @error('address') <span class="text-danger">{{ $message }}</span> @enderror
 
-        <x-wireui-input label="{{ __('devices.attributes.longitude') }}" type="number" wire:model="longitude" placeholder="{{ __('Enter') }}" />
+        <x-wireui-input label="{{ __('devices.attributes.longitude') }}" type="text" wire:model.defer="longitude" placeholder="{{ __('Enter') }}" />
         @error('longitude') <span class="text-danger">{{ $message }}</span> @enderror
 
-        <x-wireui-input label="{{ __('devices.attributes.latitude') }}" type="number" wire:model="latitude" placeholder="{{ __('Enter') }}" />
+        <x-wireui-input label="{{ __('devices.attributes.latitude') }}" type="text" wire:model.defer="latitude" placeholder="{{ __('Enter') }}" />
         @error('latitude') <span class="text-danger">{{ $message }}</span> @enderror
+
 
         <div class="flex justify-end pt-4 space-x-2">
             <x-wireui-button href="{{ route('devices.index') }}" secondary label="{{ __('Cancel') }}" />
