@@ -14,31 +14,31 @@ class MeasurementsTableSeeder extends Seeder
         
         DB::table('measurements')->insert([
             [
-                'device_id' => 'dvc-001',
+                'device_id' => '1',
                 'date_time' => $now->copy()->subHours(2),
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'device_id' => 'dvc-001',
+                'device_id' => '1',
                 'date_time' => $now->copy()->subHours(1),
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'device_id' => 'dvc-001',
+                'device_id' => '1',
                 'date_time' => $now,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'device_id' => 'dvc-002',
+                'device_id' => '2',
                 'date_time' => $now->copy()->subHours(3),
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'device_id' => 'dvc-002',
+                'device_id' => '2',
                 'date_time' => $now,
                 'created_at' => now(),
                 'updated_at' => now(),

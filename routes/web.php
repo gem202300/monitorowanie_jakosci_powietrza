@@ -27,6 +27,8 @@ Route::prefix('devices')->name('devices.')->group(function () {
         Route::delete('/{device}', [DeviceController::class, 'destroy'])->name('destroy');
     });
 
+    Route::get('/devices/{device}/measurements', [DeviceController::class, 'showMeasurements'])
+    ->name('devices.measurements');
 });
 
 

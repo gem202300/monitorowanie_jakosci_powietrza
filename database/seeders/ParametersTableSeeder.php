@@ -11,7 +11,7 @@ class ParametersTableSeeder extends Seeder
     {
         DB::table('parameters')->insert([
             [
-                'id' => 'param-001',
+                'id' => '1',
                 'name' => 'temperature',
                 'label' => 'Temperature',
                 'unit' => '°C',
@@ -20,7 +20,7 @@ class ParametersTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id' => 'param-002',
+                'id' => '2',
                 'name' => 'humidity',
                 'label' => 'Humidity',
                 'unit' => '%',
@@ -29,7 +29,7 @@ class ParametersTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id' => 'param-003',
+                'id' => '3',
                 'name' => 'pressure',
                 'label' => 'Atmospheric Pressure',
                 'unit' => 'hPa',
@@ -38,7 +38,7 @@ class ParametersTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id' => 'param-004',
+                'id' => '4',
                 'name' => 'pm25',
                 'label' => 'PM2.5',
                 'unit' => 'µg/m³',

@@ -62,4 +62,19 @@ public function destroy(Device $device)
     return redirect()->route('devices.index')->with('success', 'Device deleted successfully.');
 }
 
+public function showMeasurements(Device $device)
+    {
+        // Eager load relationships
+        $device->load([
+            'parameters',
+            'measurements' => function($query) {
+                $query->latest()->take(100); // Limit to 100 most recent measurements
+            },
+            'measurements.values',
+            'measurements.values.parameter'
+        ]);
+        
+        return view('devices.measurements', compact('device'));
+    }
+
 }
