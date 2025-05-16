@@ -22,6 +22,15 @@
         />
 
         @error('status') <span class="text-danger">{{ $message }}</span> @enderror
+        <x-wireui-select
+            label="{{ __('devices.attributes.parameters') }}"
+            wire:model="selectedParameters"
+            :options="$parameters"
+            option-label="label"
+            option-value="id"
+            multiselect
+        />
+        @error('selectedParameters') <span class="text-danger">{{ $message }}</span> @enderror
 
         <x-wireui-input label="{{ __('devices.attributes.address') }}" wire:model="address" placeholder="{{ __('Enter') }}" />
         @error('address') <span class="text-danger">{{ $message }}</span> @enderror
@@ -34,8 +43,21 @@
 
 
         <div class="flex justify-end pt-4 space-x-2">
-            <x-wireui-button href="{{ route('devices.index') }}" secondary label="{{ __('Cancel') }}" />
-            <x-wireui-button type="submit" primary label="{{ isset($device->id) ? __('devices.actions.edit') : __('devices.actions.create') }}" spinner />
-        </div>
+            <div class="flex justify-end pt-4">
+        <x-wireui-button 
+            href="{{ route('devices.index') }}" 
+            secondary 
+            label="{{ __('devices.actions.cancel') }}" 
+        />
+
+        <x-wireui-button 
+            type="submit" 
+            primary 
+            label="{{ isset($device->id) ? __('devices.actions.edit') : __('devices.actions.create') }}" 
+            spinner 
+            class="ml-2"
+        />
+    </div>
+    </div>
     </form>
 </div>

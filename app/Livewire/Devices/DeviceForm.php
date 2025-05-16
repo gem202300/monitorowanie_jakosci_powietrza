@@ -5,12 +5,16 @@ namespace App\Livewire\Devices;
 
 use App\Models\Device;
 use Livewire\Component;
+use App\Models\Parameter;
 use WireUi\Traits\WireUiActions;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class DeviceForm extends Component
 {
     use AuthorizesRequests, WireUiActions;
+
+    public $selectedParameters = [];
+    public $parameters = [];
 
     public ?Device $device;
     public $name = '';
@@ -20,17 +24,26 @@ class DeviceForm extends Component
     public $latitude = '';
 
     public function mount(Device $device = null)
-    {
-        $this->device = $device ?? new Device();
+{
+    $this->device = $device ?? new Device();
 
-        if ($this->device->exists) {
-            $this->name = $this->device->name;
-            $this->status = $this->device->status;
-            $this->address = $this->device->address;
-            $this->longitude = $this->device->longitude;
-            $this->latitude = $this->device->latitude;
-        }
+    $this->parameters = Parameter::all()->map(function ($param) {
+        return [
+            'id' => $param->id,
+            'label' => "{$param->label} ({$param->unit})",
+        ];
+    })->toArray();
+
+    if ($this->device->exists) {
+        $this->name = $this->device->name;
+        $this->status = $this->device->status;
+        $this->address = $this->device->address;
+        $this->longitude = $this->device->longitude;
+        $this->latitude = $this->device->latitude;
+
+        $this->selectedParameters = $this->device->parameters()->pluck('parameters.id')->toArray();
     }
+}
 
     public function rules()
     {
@@ -40,6 +53,7 @@ class DeviceForm extends Component
             'address' => ['required', 'string', 'max:255'],
             'longitude' => ['required', 'numeric', 'min:-180', 'max:180'],
             'latitude' => ['required', 'numeric', 'min:-90', 'max:90'],
+            'selectedParameters' => ['required', 'array'],
         ];
     }
 
@@ -51,6 +65,7 @@ class DeviceForm extends Component
             'address' => __('devices.attributes.address'),
             'longitude' => __('devices.attributes.longitude'),
             'latitude' => __('devices.attributes.latitude'),
+            'selectedParameters' => __('devices.attributes.parameters'),
         ];
     }
 
@@ -71,7 +86,12 @@ class DeviceForm extends Component
             ['id' => $this->device->id ?? null],
             $this->only(['name', 'status', 'address', 'longitude', 'latitude'])
         );
+        $device = Device::updateOrCreate(
+            ['id' => $this->device->id ?? null],
+            $this->only(['name', 'status', 'address', 'longitude', 'latitude'])
+        );
 
+        $device->parameters()->sync($this->selectedParameters);
         flash(
             $this->device->exists
                 ? __('translation.messages.successes.updated_title')

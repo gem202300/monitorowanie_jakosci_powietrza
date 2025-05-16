@@ -11,7 +11,7 @@ class DeviceController extends Controller
 
 public function index()
 {
-    $devices = Device::all(); // отримаємо всі записи
+    $devices = Device::all();
     return view('devices.index', compact('devices'));
 }
 

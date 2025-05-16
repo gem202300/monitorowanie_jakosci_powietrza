@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -11,7 +12,7 @@ class ParametersTableSeeder extends Seeder
     {
         DB::table('parameters')->insert([
             [
-                'id' => '1',
+                //'id' => (string) Str::uuid(),
                 'name' => 'temperature',
                 'label' => 'Temperature',
                 'unit' => '°C',
@@ -20,7 +21,7 @@ class ParametersTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id' => '2',
+                //'id' => (string) Str::uuid(),
                 'name' => 'humidity',
                 'label' => 'Humidity',
                 'unit' => '%',
@@ -29,7 +30,7 @@ class ParametersTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id' => '3',
+                //'id' => (string) Str::uuid(),
                 'name' => 'pressure',
                 'label' => 'Atmospheric Pressure',
                 'unit' => 'hPa',
@@ -38,9 +39,27 @@ class ParametersTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'id' => '4',
-                'name' => 'pm25',
+                //'id' => (string) Str::uuid(),
+                'name' => 'pm1',
+                'label' => 'PM1',
+                'unit' => 'µg/m³',
+                'valueType' => 'float',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                //'id' => (string) Str::uuid(),
+                'name' => 'pm2_5',
                 'label' => 'PM2.5',
+                'unit' => 'µg/m³',
+                'valueType' => 'float',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                //'id' => (string) Str::uuid(),
+                'name' => 'pm10',
+                'label' => 'PM10',
                 'unit' => 'µg/m³',
                 'valueType' => 'float',
                 'created_at' => now(),
