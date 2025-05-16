@@ -211,13 +211,6 @@ final class UserTable extends PowerGridComponent
                 ->when(fn($user) => !$user->isAdmin() || $user->id === auth()->id())
                 ->hide(),
     
-            Rule::button('assignWorkerRoleAction')
-                ->when(fn($user) => $user->isWorker() || !auth()->user()->hasRole(\App\Enums\Auth\RoleType::ADMIN->value))
-                ->hide(),
-    
-            Rule::button('removeWorkerRoleAction')
-                ->when(fn($user) => !$user->isWorker() || $user->id === auth()->id())
-                ->hide(),
     
             Rule::button('deleteUserAction')
                 ->when(fn($user) => $user->id === auth()->id() || !auth()->user()->isAdmin())

@@ -66,11 +66,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasRole(RoleType::ADMIN->value);
     }
 
-   
-    public function isWorker(): bool
-    {
-        return $this->hasRole(RoleType::SERWISANT->value);
-    }
 
    
 }

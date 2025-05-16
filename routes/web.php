@@ -19,10 +19,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/map', [\App\Http\Controllers\MapController::class, 'index'])->name('map')->middleware(['auth']);
 
 Route::prefix('devices')->name('devices.')->group(function () {
-    Route::get('/', [DeviceController::class, 'index'])->name('index');
-    Route::get('/create', [DeviceController::class, 'create'])->name('create');
-    Route::get('/{device}/edit', [DeviceController::class, 'edit'])->name('edit');
-});
+        Route::get('/', [DeviceController::class, 'index'])->name('index');
+        Route::get('/create', [DeviceController::class, 'create'])->name('create');
+        Route::post('/', [DeviceController::class, 'store'])->name('store');
+        Route::get('/{device}/edit', [DeviceController::class, 'edit'])->name('edit');
+        Route::put('/{device}', [DeviceController::class, 'update'])->name('update');
+        Route::delete('/{device}', [DeviceController::class, 'destroy'])->name('destroy');
+    });
 
 });
 

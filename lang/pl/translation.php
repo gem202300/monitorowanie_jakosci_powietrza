@@ -22,7 +22,6 @@ return [
     ],
     'roles' => [
         RoleType::ADMIN->value  => 'Administrator',
-        RoleType::SERWISANT->value => 'Serwisant',
         RoleType::USER->value   => 'Użytkownik',
     ],
     'messages' => [

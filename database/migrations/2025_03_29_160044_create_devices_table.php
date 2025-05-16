@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('devices', function (Blueprint $table) {
-            $table->string('id')->primary(); // Якщо використовується UUID
+            $table->id(); // замість $table->string('id')->primary() або іншого варіанту
+
             $table->string('name');
             $table->enum('status', ['active', 'inactive', 'maintenance']);
             $table->string('address');

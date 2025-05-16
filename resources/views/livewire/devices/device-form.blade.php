@@ -1,48 +1,40 @@
 <div class="p-2">
     <form wire:submit.prevent="submit">
-        <h3 class="text-xl font-semibold text-gray-800 leading-tight mb-2">
-            {{ $device?->id ? 'Редагувати пристрій' : 'Створити пристрій' }}
+        <h3 class="text-xl font-semibold leading-tight text-gray-800">
+            {{ isset($device->id) ? __('devices.labels.edit_form_title') : __('devices.labels.create_form_title') }}
         </h3>
 
-        <div class="grid grid-cols-2 gap-4">
-            <div>
-                <label for="name">Назва</label>
-                <x-input wire:model.defer="name" id="name" class="w-full" />
-                @error('name') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-            </div>
+        <hr class="my-2">
 
-            <div>
-                <label for="status">Статус</label>
-                <select wire:model.defer="status" id="status" class="w-full border rounded px-2 py-1">
-                    <option value="active">Активний</option>
-                    <option value="maintenance">Обслуговування</option>
-                    <option value="inactive">Неактивний</option>
-                </select>
-                @error('status') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-            </div>
+        <x-wireui-input label="{{ __('devices.attributes.name') }}" wire:model="name" placeholder="{{ __('Enter') }}" />
+        @error('name') <span class="text-danger">{{ $message }}</span> @enderror
 
-            <div>
-                <label for="address">Адреса</label>
-                <x-input wire:model.defer="address" id="address" class="w-full" />
-                @error('address') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-            </div>
+              <x-wireui-select
+            label="{{ __('devices.attributes.status') }}"
+            wire:model="status"
+            :options="[
+                ['label' => 'Active', 'value' => 'active'],
+                ['label' => 'Maintenance', 'value' => 'maintenance'],
+                ['label' => 'Inactive', 'value' => 'inactive'],
+            ]"
+            option-label="label"
+            option-value="value"
+        />
 
-            <div>
-                <label for="longitude">Довгота</label>
-                <x-input type="number" step="any" wire:model.defer="longitude" id="longitude" class="w-full" />
-                @error('longitude') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-            </div>
+        @error('status') <span class="text-danger">{{ $message }}</span> @enderror
 
-            <div>
-                <label for="latitude">Широта</label>
-                <x-input type="number" step="any" wire:model.defer="latitude" id="latitude" class="w-full" />
-                @error('latitude') <span class="text-red-500 text-sm">{{ $message }}</span> @enderror
-            </div>
-        </div>
+        <x-wireui-input label="{{ __('devices.attributes.address') }}" wire:model="address" placeholder="{{ __('Enter') }}" />
+        @error('address') <span class="text-danger">{{ $message }}</span> @enderror
 
-        <div class="flex justify-end mt-6 space-x-2">
-            <x-button href="{{ route('devices.index') }}" secondary label="Скасувати" />
-            <x-button type="submit" primary label="{{ $device?->id ? 'Оновити' : 'Створити' }}" spinner />
+        <x-wireui-input label="{{ __('devices.attributes.longitude') }}" type="number" wire:model="longitude" placeholder="{{ __('Enter') }}" />
+        @error('longitude') <span class="text-danger">{{ $message }}</span> @enderror
+
+        <x-wireui-input label="{{ __('devices.attributes.latitude') }}" type="number" wire:model="latitude" placeholder="{{ __('Enter') }}" />
+        @error('latitude') <span class="text-danger">{{ $message }}</span> @enderror
+
+        <div class="flex justify-end pt-4 space-x-2">
+            <x-wireui-button href="{{ route('devices.index') }}" secondary label="{{ __('Cancel') }}" />
+            <x-wireui-button type="submit" primary label="{{ isset($device->id) ? __('devices.actions.edit') : __('devices.actions.create') }}" spinner />
         </div>
     </form>
 </div>

@@ -2,10 +2,13 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="text-xl font-semibold text-gray-800">Список пристроїв</h2>
-            <a href="{{ route('devices.create') }}"
-               class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded transition">
-                ➕ Додати пристрій
-            </a>
+
+            @can('device_manage')
+                <a href="{{ route('devices.create') }}"
+                   class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded transition">
+                    ➕ Додати пристрій
+                </a>
+            @endcan
         </div>
     </x-slot>
 
