@@ -66,6 +66,32 @@
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
         }).addTo(map);
+fetch('/api/devices')  // якщо в api.php — тоді /api/devices, якщо в web.php — просто /devices
+    .then(response => response.json())
+    .then(devices => {
+        devices.forEach(device => {
+    if(device.latitude && device.longitude) {
+        const marker = L.marker([device.latitude, device.longitude], {
+            title: device.name,
+            icon: L.icon({
+                iconUrl: '/images/marker-icon.png',
+                iconSize: [18, 25],
+                iconAnchor: [15, 30],
+                popupAnchor: [0, -30],
+            })
+        }).addTo(map);
+
+        marker.bindPopup(`<strong>${device.name}</strong>`);
+
+        // Додати обробник кліку на маркер для переходу на сторінку з вимірами
+        marker.on('click', () => {
+            window.location.href = `/devices/${device.id}/measurements`;
+        });
+    }
+});
+
+    })
+    .catch(error => console.error('Помилка завантаження пристроїв:', error));
 
         const mapContainer = document.getElementById('map-container');
         const enterIcon = document.getElementById('enterFullScreenIcon');
