@@ -29,6 +29,12 @@
                     {{ __('Devices') }}
                     </x-nav-link>
                     @endif
+                
+                  @if(Auth::user()->isAdmin())
+                    <x-nav-link href="{{ route('parameters.index') }}" :active="request()->routeIs('parameters.index')">
+                    {{ __('Parameters') }}
+                    </x-nav-link>
+                    @endif
                     <x-nav-link href="{{ route('map') }}" :active="request()->routeIs('map')">
                      {{ __('Mapa') }}
                     </x-nav-link>

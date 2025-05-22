@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Parameter extends Model
 {
     protected $fillable = ['id', 'name', 'label', 'unit', 'valueType'];
+    protected $primaryKey = 'id';
     
     public function devices(): BelongsToMany
     {

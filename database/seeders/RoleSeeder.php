@@ -31,6 +31,8 @@ class RoleSeeder extends Seeder
         $userRole->givePermissionTo(PermissionType::USER_MANAGE->value);
         $userRole->givePermissionTo(PermissionType::DEVICE_ACCESS->value);
         $userRole->givePermissionTo(PermissionType::DEVICE_MANAGE->value);
+        $userRole->givePermissionTo(PermissionType::PARAMETER_ACCESS->value);
+        $userRole->givePermissionTo(PermissionType::PARAMETER_MANAGE->value);
         //$userRole->givePermissionTo(PermissionType::RESERBATION_ACCESS->value);
         //$userRole->givePermissionTo(PermissionType::RESERBATION_MANAGE->value);
         // PRACOWNIK
