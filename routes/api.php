@@ -1,11 +1,19 @@
 <?php
 
-use App\Http\Controllers\Api\CategoryController;
-use App\Http\Controllers\Api\ManufacturerController;
-use App\Http\Controllers\Api\ProductController;
-use App\Http\Controllers\Api\UserController;
+use App\Models\Device;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\ProductController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ManufacturerController;
+
+Route::get('/devices', function () {
+    return Device::select('id', 'name', 'latitude', 'longitude')
+        ->whereNotNull('latitude')
+        ->whereNotNull('longitude')
+        ->get();
+});
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
