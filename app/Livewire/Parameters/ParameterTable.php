@@ -94,13 +94,14 @@ final class ParameterTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make(__('ID'), 'id')->sortable()->searchable(),
-            Column::make(__('Nazwa'), 'name')->sortable()->searchable(),
-            Column::make(__('Label'), 'label')->sortable()->searchable(),
-            Column::make(__('Unit'), 'unit')->sortable()->searchable(),
-            Column::make(__('Value Type'), 'valueType')->sortable()->searchable(),
-            Column::make(__('Utworzono'), 'created_at_formatted', 'created_at')->sortable(),
-            Column::action(__('Akcje')),
+            Column::make(__('parameter_table.id'), 'id')->sortable()->searchable(),
+            Column::make(__('parameter_table.name'), 'name')->sortable()->searchable(),
+            Column::make(__('parameter_table.label'), 'label')->sortable()->searchable(),
+            Column::make(__('parameter_table.unit'), 'unit')->sortable()->searchable(),
+            Column::make(__('parameter_table.valueType'), 'valueType')->sortable()->searchable(),
+            Column::make(__('parameter_table.created_at'), 'created_at_formatted', 'created_at')->sortable(),
+            Column::action(__('parameter_table.actions')),
+
         ];
     }
 
@@ -118,14 +119,14 @@ final class ParameterTable extends PowerGridComponent
     public function actions(Parameter $parameter): array
     {
         return [
-            // Button::add('editParameter')
-            //     ->route('parameters.edit', [$parameter])
-            //     ->slot('<svg class="w-5 h-5" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536M4 13.5V19h5.5l10-10-5.5-5.5-10 10z"/></svg>')
-            //     ->tooltip('Edytuj')
-            //     ->class('text-gray-500')
-            //     ->method('get')
-            //     ->can(Auth::check() && Auth::user()->can('update', $parameter))
-            //     ->target('_self'),
+            Button::add('editParameter')
+                ->route('parameters.edit', [$parameter])
+                ->slot('<svg class="w-5 h-5" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536M4 13.5V19h5.5l10-10-5.5-5.5-10 10z"/></svg>')
+                ->tooltip('Edytuj')
+                ->class('text-gray-500')
+                ->method('get')
+                ->can(Auth::check() && Auth::user()->can('update', $parameter))
+                ->target('_self'),
 
             Button::add('deleteParameterAction')
                 ->slot('<x-wireui-icon name="trash" class="w-5 h-5" mini />') // заміни на свою іконку

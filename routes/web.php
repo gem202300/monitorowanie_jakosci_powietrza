@@ -35,8 +35,8 @@ Route::prefix('devices')->name('devices.')->group(function () {
         Route::get('/', [ParameterController::class, 'index'])->name('index');
         Route::get('/create', [ParameterController::class, 'create'])->name('create');
         Route::post('/', [ParameterController::class, 'store'])->name('store');
-        //Route::get('/{parameter}/edit', [ParameterController::class, 'edit'])->name('edit');
-        //Route::put('/{parameter}', [ParameterController::class, 'update'])->name('update');
+        Route::get('/{parameter}/edit', [ParameterController::class, 'edit'])->name('edit');
+        Route::put('/{parameter}', [ParameterController::class, 'update'])->name('update');
         Route::delete('/{parameter}', [ParameterController::class, 'destroy'])->name('destroy');
     });
 });

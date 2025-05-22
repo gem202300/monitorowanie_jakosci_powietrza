@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ isset($parameter->id) ? __('parameters.labels.edit_form_title') : __('parameters.labels.create_form_title') }}
+            {{ isset($parameter->id) ? __('parameter_forma.labels.edit_form_title') : __('parameter_forma.labels.create_form_title') }}
         </h2>
     </x-slot>
 

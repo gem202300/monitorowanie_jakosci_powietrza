@@ -33,8 +33,6 @@ class ParameterForm extends Component
         $this->label = $this->parameter->label;
         $this->unit = $this->parameter->unit;
         $this->valueType = $this->parameter->valueType;
-
-        $this->selectedParameters = $this->parameter->parameters()->pluck('parameters.id')->toArray();
     }
 }
 
@@ -51,10 +49,10 @@ class ParameterForm extends Component
     public function validationAttributes()
     {
         return [
-            'name' => __('parameters.attributes.name'),
-            'label' => __('parameters.attributes.label'),
-            'unit' => __('parameters.attributes.unit'),
-            'valueType' => __('parameters.attributes.valueType'),
+            'name' => __('parameter_forma.attributes.name'),
+            'label' => __('parameter_forma.attributes.label'),
+            'unit' => __('parameter_forma.attributes.unit'),
+            'valueType' => __('parameter_forma.attributes.valueType'),
         ];
     }
 
@@ -72,7 +70,7 @@ class ParameterForm extends Component
         
         $parameter = Parameter::updateOrCreate(
             ['id' => $this->parameter->id ?? null],
-            $this->only(['id', 'name', 'label', 'unit', 'valueType'])
+            $this->only(['name', 'label', 'unit', 'valueType'])
         );
 
         flash(
