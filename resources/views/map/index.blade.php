@@ -2,7 +2,6 @@
     <div id="map-container" style="position: relative; width: 100vw; height: 100vh; overflow: hidden;">
         <div id="map" style="width: 100%; height: 100%;"></div>
 
-        <!-- Кнопка fullscreen поверх карти -->
         <button
             id="fullscreenBtn"
             style="
@@ -22,10 +21,9 @@
                 box-shadow: 0 4px 6px rgba(0,0,0,0.1);
                 z-index: 9999;
             "
-            title="На весь екран"
+            title="Pełny ekran"
             onclick="toggleFullScreen()"
         >
-            <!-- Іконка для входу в повноекранний режим -->
             <svg id="enterFullScreenIcon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
                 <path d="M8 3H5a2 2 0 00-2 2v3"/>
                 <path d="M16 3h3a2 2 0 012 2v3"/>
@@ -33,7 +31,6 @@
                 <path d="M16 21h3a2 2 0 002-2v-3"/>
             </svg>
 
-            <!-- Іконка для виходу з повноекранного режиму (прихована спочатку) -->
             <svg id="exitFullScreenIcon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-6 w-6" viewBox="0 0 24 24" style="width: 24px; height: 24px; display:none;">
                 <line x1="18" y1="6" x2="6" y2="18" />
                 <line x1="6" y1="6" x2="18" y2="18" />
@@ -41,7 +38,6 @@
         </button>
     </div>
 
-    <!-- Leaflet CSS та JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
@@ -74,7 +70,7 @@
                     }
                 });
             })
-            .catch(error => console.error('Помилка завантаження пристроїв:', error));
+            .catch(error => console.error('Błąd podczas ładowania urządzeń:', error));
 
         const mapContainer = document.getElementById('map-container');
         const enterIcon = document.getElementById('enterFullScreenIcon');
@@ -86,7 +82,7 @@
                     enterIcon.style.display = 'none';
                     exitIcon.style.display = 'block';
                 }).catch((err) => {
-                    alert(`Не вдалося перейти у повноекранний режим: ${err.message}`);
+                    alert(`Nie udało się przełączyć na pełny ekran: ${err.message}`);
                 });
             } else {
                 document.exitFullscreen().then(() => {
