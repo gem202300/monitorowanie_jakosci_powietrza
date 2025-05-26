@@ -12,10 +12,10 @@ class ParameterForm extends Component
     use AuthorizesRequests, WireUiActions;
 
     public ?Parameter $parameter;
-    public $name = '123';
-    public $label = '123';
-    public $unit = '123';
-    public $valueType = '123';
+    public $name = '';
+    public $label = '';
+    public $unit = '';
+    public $valueType = '';
 
     public function mount(Parameter $parameter = null)
 {
