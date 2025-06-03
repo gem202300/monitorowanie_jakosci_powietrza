@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Device>
  */
@@ -18,12 +18,14 @@ class DeviceFactory extends Factory
     public function definition(): array
 {
     return [
-        'id' => Str::uuid()->toString(),
+        //'id' => Str::uuid()->toString(),
         'name' => $this->faker->word(),
         'status' => $this->faker->randomElement(['active', 'inactive', 'maintenance']),
         'address' => $this->faker->address(),
-        'longitude' => $this->faker->longitude(),
-        'latitude' => $this->faker->latitude(),
+        'latitude' => $this->faker->latitude(49.0, 55.0),   
+        'longitude' => $this->faker->longitude(14.0, 24.0), 
+        'created_at' => now(),
+        'updated_at' => now(),
     ];
 }
 

@@ -7,60 +7,24 @@ use Illuminate\Support\Facades\DB;
 
 class MeasurementValuesTableSeeder extends Seeder
 {
+    
     public function run()
     {
-        DB::table('measurement_values')->insert([
-            // Measurements for device 1
-            [
-                'measurement_id' => 1,
-                'parameter_id' => '1',
-                'value' => 22.5,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'measurement_id' => 1,
-                'parameter_id' => '2',
-                'value' => 45.2,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'measurement_id' => 1,
-                'parameter_id' => '3',
-                'value' => 1012.3,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'measurement_id' => 2,
-                'parameter_id' => '1',
-                'value' => 23.1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'measurement_id' => 2,
-                'parameter_id' => '2',
-                'value' => 43.8,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            // Measurements for device 2
-            [
-                'measurement_id' => 4,
-                'parameter_id' => '4',
-                'value' => 12.7,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'measurement_id' => 5,
-                'parameter_id' => '4',
-                'value' => 15.3,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+        $measurements = DB::table('measurements')->get();
+        $deviceParams = DB::table('device_parameters')->get()->groupBy('device_id');
+
+        foreach ($measurements as $measurement) {
+            $params = $deviceParams[$measurement->device_id] ?? collect();
+
+            foreach ($params as $param) {
+                DB::table('measurement_values')->insert([
+                    'measurement_id' => $measurement->id,
+                    'parameter_id' => $param->parameter_id,
+                    'value' => rand(10, 100) + (rand(0, 99) / 100),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        }
     }
 }

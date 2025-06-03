@@ -2,47 +2,26 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
+use App\Models\Measurement;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 
 class MeasurementsTableSeeder extends Seeder
 {
     public function run()
     {
-        $now = Carbon::now();
-        
-        DB::table('measurements')->insert([
-            [
-                'device_id' => '1',
-                'date_time' => $now->copy()->subHours(2),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'device_id' => '1',
-                'date_time' => $now->copy()->subHours(1),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'device_id' => '1',
-                'date_time' => $now,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'device_id' => '2',
-                'date_time' => $now->copy()->subHours(3),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'device_id' => '2',
-                'date_time' => $now,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ]);
+        $devices = DB::table('devices')->pluck('id');
+
+        foreach ($devices as $deviceId) {
+            for ($i = 0; $i < 72; $i++) {
+                $timestamp = Carbon::now()->subHours($i);
+
+                Measurement::factory()->create([
+                    'device_id' => $deviceId,
+                    'date_time' => $timestamp,
+                ]);
+            }
+        }
     }
 }
