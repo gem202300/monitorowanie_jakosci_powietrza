@@ -6,7 +6,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\DeviceMapController;
+use App\Http\Controllers\Api\ParameterController;
 use App\Http\Controllers\Api\ManufacturerController;
+
+Route::get('/parameters', [ParameterController::class, 'index']);
+
+Route::get('/devices/with-latest-values', [DeviceMapController::class, 'index']);
 
 Route::get('/devices', function () {
     return Device::select('id', 'name', 'latitude', 'longitude')
