@@ -6,7 +6,7 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\ParameterController;
 use App\Http\Controllers\ReservationController;
-
+use App\Livewire\Measurements\ImportMeasurements;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,10 +27,10 @@ Route::prefix('devices')->name('devices.')->group(function () {
         Route::get('/{device}/edit', [DeviceController::class, 'edit'])->name('edit');
         Route::put('/{device}', [DeviceController::class, 'update'])->name('update');
         Route::delete('/{device}', [DeviceController::class, 'destroy'])->name('destroy');
+        Route::get('/{device}/measurements', [DeviceController::class, 'showMeasurements'])->name('measurements');
     });
 
-    Route::get('/devices/{device}/measurements', [DeviceController::class, 'showMeasurements'])
-    ->name('devices.measurements');
+
 
     Route::prefix('parameters')->name('parameters.')->group(function (){
         Route::get('/', [ParameterController::class, 'index'])->name('index');
@@ -40,6 +40,9 @@ Route::prefix('devices')->name('devices.')->group(function () {
         Route::put('/{parameter}', [ParameterController::class, 'update'])->name('update');
         Route::delete('/{parameter}', [ParameterController::class, 'destroy'])->name('destroy');
     });
+
+   Route::get('/measurements/import', ImportMeasurements::class)->name('measurements.import');
+
 });
 
 

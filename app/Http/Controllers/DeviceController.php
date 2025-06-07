@@ -63,18 +63,17 @@ public function destroy(Device $device)
 }
 
 public function showMeasurements(Device $device)
-    {
-        // Eager load relationships
-        $device->load([
-            'parameters',
-            'measurements' => function($query) {
-                $query->latest()->take(100); // Limit to 100 most recent measurements
-            },
-            'measurements.values',
-            'measurements.values.parameter'
-        ]);
-        
-        return view('devices.measurements', compact('device'));
-    }
+{
+    // Пагінація вимірів з eager loading
+    $measurements = $device->measurements()
+        ->with(['values.parameter'])
+        ->orderBy('date_time', 'asc') // або 'desc' — за потребою
+        ->paginate(10); // по 10 на сторінку
+
+    // Завантажуємо параметри пристрою (якщо потрібно)
+    $parameters = $device->parameters;
+
+    return view('devices.measurements', compact('device', 'measurements', 'parameters'));
+}
 
 }

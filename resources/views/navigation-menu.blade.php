@@ -38,6 +38,13 @@
                     <x-nav-link href="{{ route('map') }}" :active="request()->routeIs('map')">
                      {{ __('Mapa') }}
                     </x-nav-link>
+
+                    @if(Auth::user()->isAdmin())
+                    <x-nav-link href="{{ route('measurements.import') }}" class="text-blue-600 hover:underline">
+                    Імпортувати виміри з JSON
+                    </x-nav-link>
+                    @endif
+
               </div>
           </div>
 

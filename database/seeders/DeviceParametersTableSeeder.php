@@ -12,8 +12,12 @@ class DeviceParametersTableSeeder extends Seeder
         $deviceIds = DB::table('devices')->pluck('id');
         $parameterIds = DB::table('parameters')->pluck('id');
 
-        foreach ($deviceIds as $deviceId) {
-            $assignedParams = $parameterIds->random(rand(2, 4));
+        foreach ($deviceIds as $index => $deviceId) {
+            if ($index < 3) {
+                $assignedParams = $parameterIds;
+            } else {
+                $assignedParams = $parameterIds->random(rand(2, 4));
+            }
 
             foreach ($assignedParams as $paramId) {
                 DB::table('device_parameters')->insert([

@@ -29,7 +29,7 @@
         <div class="bg-white shadow rounded p-6">
             <h3 class="text-lg font-semibold mb-2">Pomiary</h3>
 
-            @if($device->measurements->isEmpty())
+            @if($measurements->isEmpty())
                 <p>Brak pomiarów dla tego urządzenia.</p>
             @else
                 <div class="overflow-x-auto">
@@ -37,7 +37,7 @@
                         <thead class="bg-gray-100">
                             <tr>
                                 <th class="border p-2 text-left">Data/Czas</th>
-                                @foreach($device->parameters as $parameter)
+                                @foreach($parameters as $parameter)
                                     <th class="border p-2 text-left">
                                         {{ $parameter->name }} ({{ $parameter->unit }})
                                     </th>
@@ -45,12 +45,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($device->measurements as $measurement)
+                            @foreach($measurements as $measurement)
                                 <tr class="odd:bg-white even:bg-gray-50">
                                     <td class="border p-2">
                                         {{ \Carbon\Carbon::parse($measurement->date_time)->format('Y-m-d H:i') }}
                                     </td>
-                                    @foreach($device->parameters as $parameter)
+                                    @foreach($parameters as $parameter)
                                         @php
                                             $value = $measurement->values->firstWhere('parameter_id', $parameter->id);
                                         @endphp
@@ -62,6 +62,10 @@
                             @endforeach
                         </tbody>
                     </table>
+                </div>
+
+                <div class="mt-4">
+                    {{ $measurements->links() }}
                 </div>
             @endif
         </div>
