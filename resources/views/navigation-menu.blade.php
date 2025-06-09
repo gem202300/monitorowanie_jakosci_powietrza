@@ -41,7 +41,7 @@
 
                     @if(Auth::user()->isAdmin())
                     <x-nav-link href="{{ route('measurements.import') }}" class="text-blue-600 hover:underline">
-                    Імпортувати виміри з JSON
+                    {{ __('measurement.ImportMeasurements') }}
                     </x-nav-link>
                     @endif
 
