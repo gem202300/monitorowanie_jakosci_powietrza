@@ -6,7 +6,6 @@
 
         <hr class="my-2">
 
-        {{-- Використаємо WireUI Input для файлу --}}
         <x-wireui-input
             type="file"
             label="{{ __('measurement.select_file') ?? 'Wybierz plik' }}"

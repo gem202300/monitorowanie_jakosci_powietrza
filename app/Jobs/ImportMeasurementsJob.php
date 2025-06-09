@@ -43,14 +43,10 @@ class ImportMeasurementsJob implements ShouldQueue
         $current++;
         $progress = intval(($current / $total) * 100);
         Cache::put("import_progress_{$this->userId}", $progress);
-
-        // Парсимо devid у форматі DEV001 -> 1, DEV012 -> 12
         $deviceIdNumber = (int) filter_var($entry['devid'], FILTER_SANITIZE_NUMBER_INT);
 
-        // Шукаємо пристрій за id (числовим)
         $device = Device::find($deviceIdNumber);
 
-        // Якщо девайс не знайдено, пропускаємо запис
         if (!$device) continue;
 
         $createdAt = Carbon::createFromFormat('d.m.Y H:i', $entry['created_at']);
@@ -64,10 +60,8 @@ class ImportMeasurementsJob implements ShouldQueue
         ]);
 
         foreach ($parameters as $key => $value) {
-            // Шукаємо параметр у базі, не створюємо нові
             $parameter = $device->parameters()->where('name', $key)->first();
 
-            // Якщо параметр не знайдено, пропускаємо
             if (!$parameter) continue;
 
             MeasurementValue::create([
