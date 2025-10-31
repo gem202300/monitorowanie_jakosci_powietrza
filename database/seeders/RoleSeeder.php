@@ -24,6 +24,7 @@ class RoleSeeder extends Seeder
 
         Role::create(['name' => RoleType::ADMIN]);
         Role::create(['name' => RoleType::USER]);
+        Role::create(['name' => RoleType::SERWISANT]);
 
         // ADMINISTRATOR SYSTEMU
         $userRole = Role::findByName(RoleType::ADMIN->value);
@@ -33,9 +34,16 @@ class RoleSeeder extends Seeder
         $userRole->givePermissionTo(PermissionType::DEVICE_MANAGE->value);
         $userRole->givePermissionTo(PermissionType::PARAMETER_ACCESS->value);
         $userRole->givePermissionTo(PermissionType::PARAMETER_MANAGE->value);
+        
+        $userRole->givePermissionTo(PermissionType::SERWISANT_DEVICE_ACCESS->value);
+        $userRole->givePermissionTo(PermissionType::SERWISANT_DEVICE_MANAGE->value);
         //$userRole->givePermissionTo(PermissionType::RESERBATION_ACCESS->value);
         //$userRole->givePermissionTo(PermissionType::RESERBATION_MANAGE->value);
         // PRACOWNIK
+        // SERWISANT
+        $userRole = Role::findByName(RoleType::SERWISANT->value);
+        $userRole->givePermissionTo(PermissionType::DEVICE_ACCESS->value);
+        $userRole->givePermissionTo(PermissionType::DEVICE_MANAGE->value);
 
         // UŻYTKOWNIK
     }

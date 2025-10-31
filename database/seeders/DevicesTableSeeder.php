@@ -2,7 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use App\Models\Device;
+use App\Enums\Auth\RoleType;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 class DevicesTableSeeder extends Seeder
@@ -40,12 +42,22 @@ class DevicesTableSeeder extends Seeder
 
 
         foreach ($cities as [$city, $lat, $lng]) {
-            Device::factory()->create([
+            $device = Device::factory()->create([
                 'name' => "Device $city",
                 'address' => "$city, Poland",
                 'latitude' => $lat,
                 'longitude' => $lng,
             ]);
+        
+        $servicemen = User::role(RoleType::SERWISANT->value)->get();
+            if ($servicemen->isNotEmpty()) {
+                $serviceman = $servicemen->random();
+
+                // Перевірка, щоб девайс не був вже приписаний
+                if (!$serviceman->devices->contains($device->id)) {
+                    $serviceman->devices()->attach($device->id, ['assign_at' => now()]);
+                }
+            }
         }
     }
 

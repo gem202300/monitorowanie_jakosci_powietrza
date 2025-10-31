@@ -59,6 +59,16 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
+    public function devices()
+    {
+        return $this->belongsToMany(Device::class, 'user_devices')
+                    ->withPivot('assign_at', 'unassign_at')
+                    ->withTimestamps();
+    }
+public function isServiceman(): bool
+{
+    return $this->hasRole(RoleType::SERWISANT->value);
+}
 
     
     public function isAdmin(): bool

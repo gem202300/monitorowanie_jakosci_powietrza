@@ -77,9 +77,15 @@ class UserFactory extends Factory
      * @return $this
      */
     public function configure()
-    {
-        return $this->afterCreating(function (User $user) {
+{
+    return $this->afterCreating(function (User $user) {
+        // 1 з 5 шансів бути сервісантом
+        if (rand(1, 5) === 1) {
+            $user->assignRole(RoleType::SERWISANT->value);
+        } else {
             $user->assignRole(RoleType::USER->value);
-        });
-    }
+        }
+    });
+}
+
 }

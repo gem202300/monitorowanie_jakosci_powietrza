@@ -16,5 +16,8 @@ enum PermissionType: string
 
     case PARAMETER_ACCESS = 'parameter_access';
     case PARAMETER_MANAGE = 'parameter_manage';
+
+    case SERWISANT_DEVICE_ACCESS = 'serviceman_device_access';
+    case SERWISANT_DEVICE_MANAGE = 'serviceman_device_manage';
     
 }

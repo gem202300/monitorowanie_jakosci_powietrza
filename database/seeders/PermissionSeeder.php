@@ -26,6 +26,8 @@ class PermissionSeeder extends Seeder
         Permission::create(['name' => PermissionType::PARAMETER_ACCESS->value]);
         Permission::create(['name' => PermissionType::PARAMETER_MANAGE->value]);
 
+        Permission::create(['name' => PermissionType::SERWISANT_DEVICE_ACCESS->value]);
+        Permission::create(['name' => PermissionType::SERWISANT_DEVICE_MANAGE->value]);
         //Permission::create(['name' => PermissionType::EVENT_ACCESS->value]);
         //Permission::create(['name' => PermissionType::EVENT_MANAGE->value]);
         

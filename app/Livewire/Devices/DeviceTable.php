@@ -70,9 +70,19 @@ final class DeviceTable extends PowerGridComponent
     }
 
     public function dataSource(): Builder
-    {
-        return Device::query();
+{
+    $query = Device::query();
+
+    // Якщо користувач — сервісант, фільтруємо тільки його пристрої
+    if (Auth::user()->isServiceman()) {
+        $query->whereHas('users', function ($q) {
+            $q->where('user_id', Auth::id());
+        });
     }
+
+    return $query;
+}
+
 
     public function relationSearch(): array
     {

@@ -29,7 +29,13 @@
                     {{ __('Devices') }}
                     </x-nav-link>
                     @endif
-                
+                    @if(Auth::user()->isServiceman())
+                        <x-nav-link href="{{ route('devices.index') }}" :active="request()->routeIs('devices.index')">
+                            {{ __('Moje urządzenia') }}
+                        </x-nav-link>
+                    @endif
+
+
                   @if(Auth::user()->isAdmin())
                     <x-nav-link href="{{ route('parameters.index') }}" :active="request()->routeIs('parameters.index')">
                     {{ __('Parameters') }}
@@ -43,6 +49,12 @@
                     <x-nav-link href="{{ route('measurements.import') }}" class="text-blue-600 hover:underline">
                     {{ __('measurement.ImportMeasurements') }}
                     </x-nav-link>
+                    @endif
+
+                    @if(Auth::user()->isAdmin())
+                        <x-nav-link :href="route('servicemen.index')" :active="request()->routeIs('servicemen.*')">
+                            {{ __('Serwisanci') }}
+                        </x-nav-link>
                     @endif
 
               </div>
