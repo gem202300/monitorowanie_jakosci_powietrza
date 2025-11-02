@@ -30,7 +30,7 @@ class DatabaseSeeder extends Seeder
             DeviceParametersTableSeeder::class,
             UserDevicesTableSeeder::class,
         ]);
-
+        $this->call(DeviceRepairSeeder::class);
         $this->call([
             MeasurementsTableSeeder::class,
             MeasurementValuesTableSeeder::class,

@@ -31,6 +31,11 @@ class Device extends Model
                     ->withPivot('assign_at', 'unassign_at')
                     ->withTimestamps();
     }
+    public function repairs()
+    {
+        return $this->hasMany(DeviceRepair::class);
+    }
+
     public function measurements()
     {
         return $this->hasMany(Measurement::class);

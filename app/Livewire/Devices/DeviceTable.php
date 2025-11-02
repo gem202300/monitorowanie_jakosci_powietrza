@@ -134,6 +134,14 @@ final class DeviceTable extends PowerGridComponent
             Button::add('showMeasurement')
                 ->slot('<x-wireui-icon name="chart-bar" class="w-5 h-5" />') // або інша іконка
                  ->route('devices.measurements', ['device' => $device->id]),
+            Button::add('showRepairs')
+    ->slot('<x-wireui-icon name="clock" class="w-5 h-5" />')
+    ->tooltip('Historia awarii i napraw')
+    ->class('text-blue-500')
+    ->route('devices.repairs', ['device' => $device->id])
+    ->method('get')
+    ->target('_self'), // відкриває у тій самій вкладці
+
             Button::add('editDevice')
                 ->route('devices.edit', [$device])
                 ->slot('<svg class="w-5 h-5" fill="none" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536M4 13.5V19h5.5l10-10-5.5-5.5-10 10z"/></svg>')

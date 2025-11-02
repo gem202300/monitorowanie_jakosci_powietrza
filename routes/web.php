@@ -6,9 +6,9 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\ParameterController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\DeviceRepairController;
 use App\Livewire\Measurements\ImportMeasurements;
 use App\Http\Controllers\Admin\ServicemanController;
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -35,8 +35,11 @@ Route::prefix('devices')->name('devices.')->group(function () {
     Route::get('/servicemen/{serviceman}', [ServicemanController::class, 'show'])->name('servicemen.show');
     Route::post('/servicemen/{serviceman}/assign', [ServicemanController::class, 'assign'])->name('servicemen.assign');
     Route::post('/servicemen/{serviceman}/unassign', [ServicemanController::class, 'unassign'])->name('servicemen.unassign');
-});
-
+    });
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/devices/{device}/repairs', [DeviceRepairController::class, 'index'])
+            ->name('devices.repairs');
+    });
 
 
 
