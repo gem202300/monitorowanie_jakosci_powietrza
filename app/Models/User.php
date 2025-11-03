@@ -60,6 +60,19 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
+    public function notifications()
+    {
+        return $this->belongsToMany(Notification::class)
+            ->withPivot('read_at')
+            ->withTimestamps();
+    }
+
+    public function unreadNotifications()
+    {
+        return $this->notifications()->whereNull('notification_user.read_at');
+    }
+
+
     
     public function isAdmin(): bool
     {

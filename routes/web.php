@@ -7,6 +7,7 @@ use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\ParameterController;
 use App\Http\Controllers\ReservationController;
 use App\Livewire\Measurements\ImportMeasurements;
+   use App\Http\Controllers\NotificationController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -42,6 +43,12 @@ Route::prefix('devices')->name('devices.')->group(function () {
     });
 
    Route::get('/measurements/import', ImportMeasurements::class)->name('measurements.import');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
+    Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.readAll');
+});
 
 });
 

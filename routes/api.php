@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\DeviceMapController;
 use App\Http\Controllers\Api\ParameterController;
 use App\Http\Controllers\Api\ManufacturerController;
+use App\Http\Controllers\NotificationController;
 
 Route::get('/parameters', [ParameterController::class, 'index']);
 
@@ -58,4 +59,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('products', ProductController::class)->only([
         'index',
     ]);
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/notifications', [NotificationController::class, 'index']);
+    Route::get('/notifications/unread', [NotificationController::class, 'unread']);
+    Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead']);
+    Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead']);
+    Route::post('/notifications', [NotificationController::class, 'store']);
+});
+
 });

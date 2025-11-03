@@ -31,9 +31,13 @@ class DatabaseSeeder extends Seeder
             UserDevicesTableSeeder::class,
         ]);
 
+        $this->call(NotificationSeeder::class);
+
         $this->call([
             MeasurementsTableSeeder::class,
             MeasurementValuesTableSeeder::class,
         ]);
+
+       
     }
 }
