@@ -13,32 +13,17 @@ class NotificationSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin = User::where('email', 'admin.test@localhost')->first();
+        $admin = \App\Models\User::where('email', 'admin.test@localhost')->first();
 
-        if (!$admin) {
-            $this->command->info('Admin user not found. Skipping notifications.');
-            return;
-        }
+$notifications = [
+    ['title' => 'New Message 1', 'body' => 'This is the first test notification.'],
+    ['title' => 'New Message 2', 'body' => 'This is the second test notification.'],
+    ['title' => 'New Message 3', 'body' => 'This is the third test notification.'],
+];
 
-        $notifications = [
-            [
-                'title' => 'New Message 1',
-                'body' => 'This is the text of the first notification.',
-            ],
-            [
-                'title' => 'New Message 2',
-                'body' => 'Here comes the second notification for testing purposes.',
-            ],
-            [
-                'title' => 'New Message 3',
-                'body' => 'Finally, this is the third notification example.',
-            ],
-        ];
+foreach ($notifications as $data) {
+    $admin->notify(new \App\Notifications\GenericNotification($data));
+}
 
-        foreach ($notifications as $data) {
-            $admin->notify(new GenericNotification($data));
-        }
-
-        $this->command->info('3 notifications created for the admin user.');
     }
 }

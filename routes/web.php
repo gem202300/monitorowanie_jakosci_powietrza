@@ -7,7 +7,7 @@ use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\ParameterController;
 use App\Http\Controllers\ReservationController;
 use App\Livewire\Measurements\ImportMeasurements;
-   use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\NotificationController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -44,11 +44,14 @@ Route::prefix('devices')->name('devices.')->group(function () {
 
    Route::get('/measurements/import', ImportMeasurements::class)->name('measurements.import');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
-    Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.read');
-    Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.readAll');
+    Route::post('/notifications/mark-all-read', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
+    Route::post('/notifications/{id}/mark-as-read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
+    Route::get('/notifications/{id}', [NotificationController::class, 'show'])->name('notifications.show');
+    Route::delete('/notifications/{id}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
 });
+
 
 });
 

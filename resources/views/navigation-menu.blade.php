@@ -45,21 +45,16 @@
                     </x-nav-link>
                     @endif
 
-                    @auth
-                    @php
-                    $unreadCount = Auth::user()->unreadNotifications()->count();
-                    @endphp
-
-                    <x-nav-link href="{{ route('notifications.index') }}"
-                        class="relative text-blue-600 hover:underline flex items-center gap-1">
+                    <x-nav-link href="{{ route('notifications.index') }}" class="relative flex items-center gap-1">
                         🔔
+                        @php $unreadCount = Auth::user()->unreadNotifications->count() @endphp
                         @if($unreadCount > 0)
                         <span class="absolute -top-1 -right-2 bg-red-600 text-white text-xs rounded-full px-1.5">
                             {{ $unreadCount }}
                         </span>
                         @endif
                     </x-nav-link>
-                    @endauth
+
 
 
 

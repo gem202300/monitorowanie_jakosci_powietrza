@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Notification;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
@@ -10,6 +9,7 @@ class NotificationController extends Controller
     public function index(Request $request)
     {
         $notifications = $request->user()->notifications()->latest()->get();
+
         return view('notifications.index', compact('notifications'));
     }
 
@@ -20,37 +20,38 @@ class NotificationController extends Controller
 
     public function markAsRead(Request $request, $id)
     {
-        $request->user()->notifications()
-            ->updateExistingPivot($id, ['read_at' => now()]);
+        $notification = $request->user()->notifications()->find($id);
+        if ($notification) {
+            $notification->markAsRead();
+        }
 
         return redirect()->route('notifications.index');
     }
 
     public function markAllAsRead(Request $request)
     {
-        $request->user()->notifications()
-            ->wherePivotNull('read_at')
-            ->update(['read_at' => now()]);
+        $request->user()->unreadNotifications->markAsRead();
 
         return redirect()->route('notifications.index');
     }
+    public function show($id)
+{
+    $notification = auth()->user()->notifications()->findOrFail($id);
 
-    public function store(Request $request)
-    {
-        $data = $request->validate([
-            'title' => 'required|string|max:255',
-            'body' => 'nullable|string',
-            'user_ids' => 'required|array'
-        ]);
-
-        $notification = Notification::create([
-            'title' => $data['title'],
-            'body' => $data['body'] ?? null,
-        ]);
-
-        $notification->users()->attach($data['user_ids']);
-
-        return response()->json($notification, 201);
+    if(is_null($notification->read_at)) {
+        $notification->markAsRead();
     }
+
+    return view('notifications.show', compact('notification'));
 }
 
+public function destroy(Request $request, $id)
+{
+    $notification = $request->user()->notifications()->findOrFail($id);
+    $notification->delete(); // видаляє запис з таблиці notifications
+
+    return redirect()->route('notifications.index')->with('success', 'Notification deleted.');
+}
+
+
+}
