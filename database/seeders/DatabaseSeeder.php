@@ -33,6 +33,9 @@ class DatabaseSeeder extends Seeder
 
         $this->call(NotificationSeeder::class);
 
+
+        $this->call(DeviceRepairSeeder::class);
+
         $this->call([
             MeasurementsTableSeeder::class,
             MeasurementValuesTableSeeder::class,

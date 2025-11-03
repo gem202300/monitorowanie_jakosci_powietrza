@@ -2,19 +2,18 @@
 
 namespace Database\Seeders;
 
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 
 class UserDevicesTableSeeder extends Seeder
 {
     public function run()
     {
-        // Assuming you have users with IDs 1, 2, and 3
         DB::table('user_devices')->insert([
             [
                 'user_id' => 1,
-                'device_id' => 'dvc-001',
+                'device_id' => 1, // <- замінив на 1
                 'assign_at' => Carbon::now()->subDays(30),
                 'unassign_at' => null,
                 'created_at' => now(),
@@ -22,7 +21,7 @@ class UserDevicesTableSeeder extends Seeder
             ],
             [
                 'user_id' => 2,
-                'device_id' => 'dvc-002',
+                'device_id' => 2, // <- замінив на 2
                 'assign_at' => Carbon::now()->subDays(15),
                 'unassign_at' => Carbon::now()->subDays(5),
                 'created_at' => now(),
@@ -30,7 +29,7 @@ class UserDevicesTableSeeder extends Seeder
             ],
             [
                 'user_id' => 3,
-                'device_id' => 'dvc-003',
+                'device_id' => 3, // <- замінив на 3
                 'assign_at' => Carbon::now()->subDays(10),
                 'unassign_at' => null,
                 'created_at' => now(),

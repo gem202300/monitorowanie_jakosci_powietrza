@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Enums\Auth\RoleType;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-
 class UserSeeder extends Seeder
 {
     public function run(): void
@@ -28,5 +27,13 @@ class UserSeeder extends Seeder
             'phone' => '1122334455', 
             'address' => 'Admin Address, 789', 
         ])->assignRole(RoleType::ADMIN->value);
+        \App\Models\User::factory()->create([
+            'name' => 'Serwisant Testowy',
+            'email' => 'serwisant.test@localhost',
+            'password' => Hash::make('12345678'),
+            'phone' => '1162334455',
+            'address' => 'Serwisant Address, 789',
+        ])->assignRole(RoleType::SERWISANT->value);
+        
     }
 }

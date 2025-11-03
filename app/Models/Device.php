@@ -25,7 +25,17 @@ class Device extends Model
         return $this->belongsToMany(Parameter::class, 'device_parameters', 'device_id', 'parameter_id')
             ->withTimestamps();
     }
-    
+     public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_devices')
+                    ->withPivot('assign_at', 'unassign_at')
+                    ->withTimestamps();
+    }
+    public function repairs()
+    {
+        return $this->hasMany(DeviceRepair::class);
+    }
+
     public function measurements()
     {
         return $this->hasMany(Measurement::class);
