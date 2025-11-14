@@ -48,7 +48,7 @@ class NotificationController extends Controller
 public function destroy(Request $request, $id)
 {
     $notification = $request->user()->notifications()->findOrFail($id);
-    $notification->delete(); // видаляє запис з таблиці notifications
+    $notification->delete();
 
     return redirect()->route('notifications.index')->with('success', 'Notification deleted.');
 }
