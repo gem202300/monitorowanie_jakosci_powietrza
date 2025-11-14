@@ -11,6 +11,7 @@ return new class extends Migration
             $table->id(); // автоматичний інкремент
             $table->string('name');
             $table->enum('status', ['active', 'inactive', 'maintenance'])->default('maintenance');
+            $table->timestamp('status_updated_at')->nullable();
             $table->string('address');
             $table->float('longitude');
             $table->float('latitude');

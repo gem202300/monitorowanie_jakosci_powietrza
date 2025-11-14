@@ -82,16 +82,19 @@ class DeviceForm extends Component
 
         $this->validate();
 
-        Device::updateOrCreate(
-            ['id' => $this->device->id ?? null],
-            $this->only(['name', 'status', 'address', 'longitude', 'latitude'])
-        );
+        $data = $this->only(['name', 'status', 'address', 'longitude', 'latitude']);
+        
+        if ($this->device->exists && $this->device->status !== $this->status) {
+            $data['status_updated_at'] = now();
+        }
+
         $device = Device::updateOrCreate(
             ['id' => $this->device->id ?? null],
-            $this->only(['name', 'status', 'address', 'longitude', 'latitude'])
+            $data
         );
 
         $device->parameters()->sync($this->selectedParameters);
+
         flash(
             $this->device->exists
                 ? __('translation.messages.successes.updated_title')
@@ -104,6 +107,7 @@ class DeviceForm extends Component
 
         return redirect()->route('devices.index');
     }
+
     
 
  

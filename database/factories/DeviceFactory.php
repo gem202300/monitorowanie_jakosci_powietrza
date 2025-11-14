@@ -21,6 +21,7 @@ class DeviceFactory extends Factory
         //'id' => Str::uuid()->toString(),
         'name' => $this->faker->word(),
         'status' => $this->faker->randomElement(['active', 'inactive', 'maintenance']),
+         'status_updated_at' => now(),
         'address' => $this->faker->address(),
         'latitude' => $this->faker->latitude(49.0, 55.0),   
         'longitude' => $this->faker->longitude(14.0, 24.0), 

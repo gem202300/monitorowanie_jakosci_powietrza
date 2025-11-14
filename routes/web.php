@@ -7,8 +7,9 @@ use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\ParameterController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\DeviceRepairController;
-use App\Livewire\Measurements\ImportMeasurements;
+use App\Http\Controllers\DeviceReportController;
 use App\Http\Controllers\NotificationController;
+use App\Livewire\Measurements\ImportMeasurements;
 use App\Http\Controllers\Admin\ServicemanController;
 
 Route::get('/', function () {
@@ -22,6 +23,7 @@ Route::middleware(['auth'])->group(function () {
     });
     
     Route::get('/map', [\App\Http\Controllers\MapController::class, 'index'])->name('map')->middleware(['auth']);
+    Route::post('/device-reports', [DeviceReportController::class, 'store'])->name('device-reports.store');
 
 Route::prefix('devices')->name('devices.')->group(function () {
         Route::get('/', [DeviceController::class, 'index'])->name('index');
