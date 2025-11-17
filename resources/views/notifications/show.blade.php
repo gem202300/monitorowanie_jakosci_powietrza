@@ -17,9 +17,12 @@
                 <div class="flex items-center justify-between mb-2">
                     <h3 class="text-2xl font-semibold text-gray-900">
                         {{ $notification->data['title'] ?? 'Powiadomienie' }}</h3>
-                    @if(!empty($notification->data['type']))\n <span
-                        class="inline-block text-xs px-2 py-1 rounded-full {{ $notification->data['type'] === 'critical' ? 'bg-red-600 text-white' : ($notification->data['type'] === 'warning' ? 'bg-yellow-500 text-white' : ($notification->data['type'] === 'incident' ? 'bg-orange-500 text-white' : 'bg-gray-300 text-black')) }}\">\n
-                        {{ strtoupper($notification->data['type']) }}\n </span>\n @endif
+                    @if(!empty($notification->data['type']))
+                    <span
+                        class="inline-block text-xs px-2 py-1 rounded-full {{ $notification->data['type'] === 'critical' ? 'bg-red-600 text-white' : ($notification->data['type'] === 'warning' ? 'bg-yellow-500 text-white' : ($notification->data['type'] === 'incident' ? 'bg-orange-500 text-white' : 'bg-gray-300 text-black')) }}">
+                        {{ strtoupper($notification->data['type']) }}
+                    </span>
+                    @endif
                 </div>
                 <p class="text-sm text-gray-600">Utworzono: <span
                         class="font-medium">{{ \Carbon\Carbon::parse($notification->created_at)->format('d.m.Y o H:i') }}</span>
@@ -31,7 +34,7 @@
                 <h4 class="text-sm font-semibold text-gray-700 uppercase tracking-wide mb-2">Treść</h4>
                 <div
                     class="bg-gray-50 border border-gray-200 rounded p-4 text-gray-800 leading-relaxed whitespace-pre-wrap">
-                    {{ $notification->data['body'] ?? 'Brak treści' }}
+                    {!! nl2br(e(str_replace('\\n', "\n", $notification->data['body'] ?? 'Brak treści'))) !!}
                 </div>
             </div>
 
@@ -71,7 +74,7 @@
                     <p class="text-xs font-semibold text-gray-700 uppercase tracking-wide mb-2">Pełny opis</p>
                     <div
                         class="bg-gray-50 border border-gray-200 rounded p-4 text-gray-800 text-sm leading-relaxed whitespace-pre-wrap">
-                        {{ $notification->data['description'] }}
+                        {!! nl2br(e(str_replace('\\n', "\n", $notification->data['description'] ?? ''))) !!}
                     </div>
                 </div>
                 @endif

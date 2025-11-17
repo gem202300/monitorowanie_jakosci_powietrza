@@ -37,13 +37,13 @@
                         class="border border-gray-400 rounded px-2 py-1 text-sm">
 
                     <button type="submit"
-                        class="border border-gray-400 text-gray-700 hover:bg-gray-200 px-3 py-1 rounded text-sm transition">
+                        class="bg-blue-500 text-white hover:bg-blue-600 px-4 py-1 rounded text-sm transition font-semibold">
                         Filtruj
                     </button>
 
                     @if($dateFrom || $dateTo)
                     <a href="{{ route('notifications.index', array_filter(['type' => $type])) }}"
-                        class="border border-gray-400 text-gray-700 hover:bg-gray-200 px-3 py-1 rounded text-sm transition">
+                        class="bg-gray-500 text-white hover:bg-gray-600 px-4 py-1 rounded text-sm transition font-semibold">
                         Wyczyść
                     </a>
                     @endif
