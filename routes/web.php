@@ -65,6 +65,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/notifications/{id}', [NotificationController::class, 'show'])->name('notifications.show');
     Route::delete('/notifications/{id}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
 });
+Route::middleware(['auth'])->group(function () {
+    Route::get('/device-reports', [DeviceReportController::class, 'index'])
+        ->name('device-reports.index');
+});
+
 
 
 });

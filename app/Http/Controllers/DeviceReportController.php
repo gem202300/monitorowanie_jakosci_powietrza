@@ -156,4 +156,9 @@ class DeviceReportController extends Controller
             Log::error('Error while notifying admins: ' . $e->getMessage());
         }
     }
+        public function index()
+    {
+        return view('device-reports.index');
+    }
+
 }

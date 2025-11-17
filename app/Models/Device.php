@@ -45,4 +45,9 @@ class Device extends Model
     {
         return $this->hasMany(DeviceStatusHistory::class, 'device_id')->orderByDesc('changed_at');
     }
+        public function reports()
+    {
+        return $this->hasMany(DeviceReport::class);
+    }
+
 }
