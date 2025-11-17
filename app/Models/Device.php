@@ -40,4 +40,9 @@ class Device extends Model
     {
         return $this->hasMany(Measurement::class);
     }
+
+    public function statusHistories()
+    {
+        return $this->hasMany(DeviceStatusHistory::class, 'device_id')->orderByDesc('changed_at');
+    }
 }

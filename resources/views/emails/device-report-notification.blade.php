@@ -124,6 +124,14 @@
     <div class="email-container">
         <div class="header">
             <h1>🔔 Nowe zgłoszenie dla urządzenia</h1>
+            @if(!empty($type))
+            <p style="margin-top:8px;font-size:13px;opacity:0.95">
+                <strong>Typ:</strong>
+                <span style="display:inline-block;padding:4px 10px;border-radius:12px;background-color:#fff;color:#333;font-weight:600;margin-left:8px;">
+                    {{ strtoupper($type) }}
+                </span>
+            </p>
+            @endif
         </div>
 
         <div class="content">

@@ -8,9 +8,32 @@ class NotificationController extends Controller
 {
     public function index(Request $request)
     {
-        $notifications = $request->user()->notifications()->latest()->get();
+        $type = $request->query('type');
+        $dateFrom = $request->query('date_from');
+        $dateTo = $request->query('date_to');
 
-        return view('notifications.index', compact('notifications'));
+        $query = $request->user()->notifications()->latest();
+        
+        if ($type) {
+            // filter by JSON payload field `type`
+            $query->where('data->type', $type);
+        }
+
+        if ($dateFrom) {
+            // filter from date (start of day)
+            $query->whereDate('created_at', '>=', $dateFrom);
+        }
+
+        if ($dateTo) {
+            // filter to date (end of day)
+            $query->whereDate('created_at', '<=', $dateTo);
+        }
+
+        $notifications = $query->get();
+
+        $types = ['info', 'warning', 'critical', 'incident'];
+
+        return view('notifications.index', compact('notifications', 'types', 'type', 'dateFrom', 'dateTo'));
     }
 
     public function unread(Request $request)
