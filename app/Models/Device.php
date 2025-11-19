@@ -35,6 +35,10 @@ class Device extends Model
     {
         return $this->hasMany(DeviceRepair::class);
     }
+    public function assignmentHistory()
+    {
+        return $this->hasMany(\App\Models\DeviceAssignmentHistory::class)->orderBy('assigned_at', 'desc');
+    }
 
     public function measurements()
     {

@@ -54,6 +54,18 @@ public function update(Request $request, Device $device)
 
     return redirect()->route('devices.index')->with('success', 'Device updated successfully.');
 }
+    public function history(Device $device)
+    {
+        $history = $device->assignmentHistory()
+            ->with(['assigner', 'user'])
+            ->orderBy('assigned_at', 'desc')
+            ->paginate(15); 
+            
+        return view('devices.history', [
+            'device' => $device,
+            'history' => $history
+        ]);
+    }
 
 public function destroy(Device $device)
 {

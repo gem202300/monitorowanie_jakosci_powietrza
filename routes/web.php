@@ -37,6 +37,7 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/{device}', [DeviceController::class, 'update'])->name('update');
         Route::delete('/{device}', [DeviceController::class, 'destroy'])->name('destroy');
         Route::get('/{device}/measurements', [DeviceController::class, 'showMeasurements'])->name('measurements');
+        Route::get('/{device}/history', [DeviceController::class, 'history'])->name('history');
     });
     Route::middleware(['auth'])->group(function () {
         Route::get('/servicemen', [ServicemanController::class, 'index'])->name('servicemen.index');
@@ -48,7 +49,11 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/devices/{device}/repairs', [DeviceRepairController::class, 'index'])
             ->name('devices.repairs');
     });
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('/devices/{device}/history', [DeviceController::class, 'history'])
+        ->name('devices.history');
+});
+ Route::get('/{device}/history', [DeviceController::class, 'history'])->name('history');
 
 
     Route::prefix('parameters')->name('parameters.')->group(function () {

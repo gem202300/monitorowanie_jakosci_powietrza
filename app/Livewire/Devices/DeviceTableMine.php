@@ -147,6 +147,13 @@ final class DeviceTableMine extends PowerGridComponent
                 ->class('text-red-500')
                 ->can(Auth::user()->can('delete', $device))
                 ->dispatch('deleteDeviceAction', ['device' => $device]),
+            Button::add('showHistory')
+                ->slot('<x-wireui-icon name="users" class="w-5 h-5" />')
+                ->tooltip('Historia przypisań')
+                ->class('text-purple-500 hover:text-purple-700')
+                ->route('devices.history', ['device' => $device->id])
+                ->method('get')
+                ->target('_self'),
         ];
     }
 

@@ -27,7 +27,6 @@ class ServicemanController extends Controller
 
     public function show(User $serviceman)
 {
-    // Вибираємо лише ті пристрої, які не мають жодного сервісанта
     $devices = Device::whereDoesntHave('users')->get();
 
     return view('admin.servicemen.show', compact('serviceman', 'devices'));
@@ -35,16 +34,36 @@ class ServicemanController extends Controller
 
 
     public function assign(User $serviceman, Request $request)
-    {
-        if (!$serviceman->devices->contains($request->device_id)) {
-            $serviceman->devices()->attach($request->device_id, ['assign_at' => now()]);
-        }
-        return back()->with('success', 'Device assigned.');
+{
+    $deviceId = $request->device_id;
+
+    if (!$serviceman->devices->contains($deviceId)) {
+       
+        $serviceman->devices()->attach($deviceId, ['assign_at' => now()]);
+
+        \App\Models\DeviceAssignmentHistory::create([
+            'device_id' => $deviceId,
+            'user_id' => $serviceman->id,
+            'assigned_by' => auth()->id(), 
+            'assigned_at' => now(),
+        ]);
     }
 
+    return back()->with('success', 'Device assigned.');
+}
+
     public function unassign(User $serviceman, Request $request)
-    {
-        $serviceman->devices()->detach($request->device_id);
-        return back()->with('success', 'Device unassigned.');
-    }
+{
+    $deviceId = $request->device_id;
+
+    $serviceman->devices()->detach($deviceId);
+
+    \App\Models\DeviceAssignmentHistory::where('device_id', $deviceId)
+        ->where('user_id', $serviceman->id)
+        ->whereNull('unassigned_at')
+        ->update(['unassigned_at' => now()]);
+
+    return back()->with('success', 'Device unassigned.');
+}
+
 }
