@@ -26,17 +26,17 @@ class UserFactory extends Factory
      * @return array<string, mixed>
      */
     public function definition(): array
-        {
-            return [
-                'name' => fake()->firstName().' '.fake()->lastName(),
-                'email' => fake()->unique()->safeEmail(),
-                'email_verified_at' => now(),
-                'password' => static::$password ??= Hash::make('password'),
-                'phone' => fake()->phoneNumber(), 
-                'address' => fake()->address(), 
-                'remember_token' => Str::random(10),
-            ];
-        }
+    {
+        return [
+            'name' => fake()->firstName() . ' ' . fake()->lastName(),
+            'email' => fake()->unique()->safeEmail(),
+            'email_verified_at' => now(),
+            'password' => static::$password ??= Hash::make('password'),
+            'phone' => fake()->phoneNumber(),
+            'address' => fake()->address(),
+            'remember_token' => Str::random(10),
+        ];
+    }
 
 
     /**
@@ -44,7 +44,7 @@ class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn(array $attributes) => [
             'email_verified_at' => null,
         ]);
     }
@@ -60,8 +60,8 @@ class UserFactory extends Factory
 
         return $this->has(
             Team::factory()
-                ->state(fn (array $attributes, User $user) => [
-                    'name' => $user->name.'\'s Team',
+                ->state(fn(array $attributes, User $user) => [
+                    'name' => $user->name . '\'s Team',
                     'user_id' => $user->id,
                     'personal_team' => true,
                 ])
@@ -77,15 +77,13 @@ class UserFactory extends Factory
      * @return $this
      */
     public function configure()
-{
-    return $this->afterCreating(function (User $user) {
-        // 1 з 5 шансів бути сервісантом
-        if (rand(1, 5) === 1) {
-            $user->assignRole(RoleType::SERWISANT->value);
-        } else {
-            $user->assignRole(RoleType::USER->value);
-        }
-    });
-}
-
+    {
+        return $this->afterCreating(function (User $user) {
+            if (rand(1, 5) === 1 && !$user->hasRole(RoleType::ADMIN->value)) {
+                $user->assignRole(RoleType::SERWISANT->value);
+            } else {
+                $user->assignRole(RoleType::USER->value);
+            }
+        });
+    }
 }

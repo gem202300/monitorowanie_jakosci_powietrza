@@ -9,8 +9,7 @@ class UserSeeder extends Seeder
 {
     public function run(): void
     {
-        \App\Models\User::factory(100)->create();
-
+        
         \App\Models\User::factory()->create([
             'name' => 'Użytkownik Testowy',
             'email' => 'user.test@localhost',
@@ -34,6 +33,7 @@ class UserSeeder extends Seeder
             'phone' => '1162334455',
             'address' => 'Serwisant Address, 789',
         ])->assignRole(RoleType::SERWISANT->value);
-        
+        \App\Models\User::factory(100)->create();
+
     }
 }

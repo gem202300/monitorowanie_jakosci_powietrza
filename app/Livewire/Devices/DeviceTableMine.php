@@ -8,7 +8,6 @@ use WireUi\Traits\WireUiActions;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use PowerComponents\LivewirePowerGrid\Button;
-
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Footer;
 use PowerComponents\LivewirePowerGrid\Header;
@@ -20,7 +19,7 @@ use PowerComponents\LivewirePowerGrid\Traits\WithExport;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
 
-final class DeviceTable extends PowerGridComponent
+final class DeviceTableMine extends PowerGridComponent
 {
     use AuthorizesRequests, WireUiActions, WithExport;
 
@@ -45,21 +44,17 @@ final class DeviceTable extends PowerGridComponent
     public function destroy(Device $device)
     {
         $this->authorize('delete', $device);
-
         $device->delete();
-
         $this->notification()->success(
             'Sukces',
             __('Urządzenie ":name" zostało usunięte.', ['name' => $device->name])
         );
-
         $this->dispatch('pg:refresh');
     }
 
     public function setUp(): array
     {
         $this->showCheckBox();
-
         return [
             Exportable::make('Eksport')
                 ->striped()
@@ -71,10 +66,13 @@ final class DeviceTable extends PowerGridComponent
 
     public function dataSource(): Builder
     {
-        $query = Device::query()->with('users');
-
-
-
+        $query = Device::query();
+        // Pokazuj tylko urządzenia przypisane do serwisanta
+        if (Auth::user()->isServiceman()) {
+            $query->whereHas('users', function ($q) {
+                $q->where('user_id', Auth::id());
+            });
+        }
         return $query;
     }
 
@@ -93,7 +91,7 @@ final class DeviceTable extends PowerGridComponent
             ->add('longitude')
             ->add('latitude')
             ->add('created_at')
-            ->add('created_at_formatted', fn($device) => Carbon::parse($device->created_at)->format('Y-m-d H:i'));
+            ->add('created_at_formatted', fn ($device) => Carbon::parse($device->created_at)->format('Y-m-d H:i'));
     }
 
     public function columns(): array
@@ -124,7 +122,6 @@ final class DeviceTable extends PowerGridComponent
 
     public function actions(Device $device): array
     {
-        $isMine = $device->users->contains(Auth::id());
         return [
             Button::add('showMeasurement')
                 ->slot('<x-wireui-icon name="chart-bar" class="w-5 h-5" />')
@@ -142,13 +139,13 @@ final class DeviceTable extends PowerGridComponent
                 ->tooltip('Edytuj')
                 ->class('text-gray-500')
                 ->method('get')
-                ->can((Auth::user()->hasRole('admin') || $isMine) && Auth::user()->can('update', $device))
+                ->can(Auth::check() && Auth::user()->can('update', $device))
                 ->target('_self'),
             Button::add('deleteDeviceAction')
                 ->slot('<x-wireui-icon name="trash" class="w-5 h-5" mini />')
                 ->tooltip('Usuń')
                 ->class('text-red-500')
-                ->can((Auth::user()->hasRole('admin') || $isMine) && Auth::user()->can('delete', $device))
+                ->can(Auth::user()->can('delete', $device))
                 ->dispatch('deleteDeviceAction', ['device' => $device]),
         ];
     }
