@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             DeviceParametersTableSeeder::class,
-            
+            UserDevicesTableSeeder::class,
         ]);
 
         $this->call(NotificationSeeder::class);

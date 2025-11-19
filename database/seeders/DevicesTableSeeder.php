@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Device;
 use App\Enums\Auth\RoleType;
 use Illuminate\Database\Seeder;
+use App\Models\DeviceStatusHistory;
 use App\Models\DeviceAssignmentHistory;
 
 class DevicesTableSeeder extends Seeder
@@ -39,7 +40,6 @@ class DevicesTableSeeder extends Seeder
             ['Kalisz', 51.7611, 18.0910],
         ];
 
-        // Беремо адміна для поля assigned_by
         $admin = User::role(RoleType::ADMIN->value)->first();
 
         foreach ($cities as [$city, $lat, $lng]) {
@@ -51,24 +51,36 @@ class DevicesTableSeeder extends Seeder
                 'longitude' => $lng,
             ]);
 
+           
+            DeviceStatusHistory::create([
+                'device_id'   => $device->id,
+                'from_status' => null,
+                'to_status'   => match ($device->status) {
+                    'active' => 'aktywny',
+                    'inactive' => 'nieaktywny',
+                    'maintenance' => 'serwis',
+                    default => 'nieznany',
+                },
+                'reason'      => 'Initial status on creation',
+                'changed_at'  => now(),
+            ]);
+
+         
             $servicemen = User::role(RoleType::SERWISANT->value)->get();
 
             if ($servicemen->isNotEmpty()) {
                 $serviceman = $servicemen->random();
 
-                // Перевіряємо, чи не приписано
                 if (!$serviceman->devices->contains($device->id)) {
 
-                    // Поточне приписування
                     $serviceman->devices()->attach($device->id, [
                         'assign_at' => now()
                     ]);
 
-                    // Запис в історію
                     DeviceAssignmentHistory::create([
                         'device_id'      => $device->id,
                         'user_id'        => $serviceman->id,
-                        'assigned_by'    => $admin?->id ?? null,  // якщо раптом адміна немає
+                        'assigned_by'    => $admin?->id ?? null,
                         'assigned_at'    => now(),
                         'unassigned_at'  => null,
                     ]);
