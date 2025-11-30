@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Servicemen') }}
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            {{ __('servicemen.title') }}
         </h2>
     </x-slot>
 
@@ -12,9 +12,9 @@
                 <!-- Форма пошуку -->
                 <form method="GET" action="{{ route('servicemen.index') }}" class="mb-4 flex justify-end">
                     <input type="text" name="search" value="{{ request('search') }}"
-                        placeholder="Search by name or email"
+                        placeholder="{{ __('servicemen.search_placeholder') }}"
                         class="border rounded px-3 py-1 mr-2">
-                    <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded">Search</button>
+                    <button type="submit" class="bg-blue-500 text-white px-3 py-1 rounded">{{ __('servicemen.search') }}</button>
                 </form>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -22,12 +22,12 @@
                         <div class="border rounded p-4 flex flex-col justify-between">
                             <div>
                                 <h3 class="font-bold text-lg">{{ $serviceman->name }}</h3>
-                                <p>Email: {{ $serviceman->email }}</p>
-                                <p>Assigned devices: {{ $serviceman->devices->count() }}</p>
+                                <p>{{ __('servicemen.email') }} {{ $serviceman->email }}</p>
+                                <p>{{ __('servicemen.assigned_devices') }} {{ $serviceman->devices->count() }}</p>
                             </div>
                             <a href="{{ route('servicemen.show', $serviceman) }}" 
                                class="mt-4 inline-block bg-blue-500 text-white px-3 py-1 rounded self-end">
-                                Manage Devices
+                                {{ __('servicemen.manage_devices') }}
                             </a>
                         </div>
                     @endforeach

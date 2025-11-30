@@ -7,14 +7,13 @@
             style="position: absolute; top: 12px; right: 60px; background-color: #e5e7eb; color: black;
                    border: none; border-radius: 9999px; width: 40px; height: 40px; display: flex;
                    align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                   z-index: 9999;" title="Filtr">🔍</button>
+                   z-index: 9999;" title="{{ __('map.filter') }}">🔍</button>
 
         <!-- PRZYCISK PEŁNEGO EKRANU -->
-        <button id="fullscreenBtn"
             style="position: absolute; top: 12px; right: 12px; background-color: #e5e7eb; color: black;
                    border: none; border-radius: 9999px; width: 40px; height: 40px; display: flex;
                    align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                   z-index: 9999;" title="Pełny ekran" onclick="toggleFullScreen()">
+                   z-index: 9999;" title="{{ __('map.fullscreen') }}" onclick="toggleFullScreen()">
             <svg id="enterFullScreenIcon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                  class="h-6 w-6" viewBox="0 0 24 24" style="width: 24px; height: 24px;">
@@ -34,10 +33,10 @@
         <!-- PANEL FILTRA -->
         <div id="filterPanel" style="display: none; position: absolute; top: 60px; right: 12px; z-index: 9999;
              background: white; padding: 12px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
-            <label>Data/Godzina:</label>
+            <label>{{ __('map.choose_datetime') }}:</label>
             <input type="datetime-local" id="filterDatetime" />
             <select id="parameterSelect"></select>
-            <button onclick="loadFilteredDevices()">Filtruj</button>
+            <button type="button" onclick="loadFilteredDevices()">{{ __('map.filter') }}</button>
         </div>
 
         <!-- LEGENDA -->
@@ -52,9 +51,9 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
             z-index: 9999;
             max-width: 250px;">
-            <strong>Legenda:</strong>
+            <strong>{{ __('map.legend') }}:</strong>
             <div id="legend-content">
-                Wybierz parametr
+                {{ __('map.select_parameter') }}
             </div>
         </div>
     </div>
@@ -63,6 +62,11 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
+        const MSG_CHOOSE = @json(__('map.error.choose_parameter'));
+        const LEGEND_TEMPERATURE = @json(trans('map.legend_items.temperature'));
+        const LEGEND_HUMIDITY = @json(trans('map.legend_items.humidity'));
+        const LEGEND_PRESSURE = @json(trans('map.legend_items.pressure'));
+        const LEGEND_PM = @json(trans('map.legend_items.pm'));
         const map = L.map('map');
         const boundsPoland = L.latLngBounds([[49.0, 14.0], [55.0, 24.5]]);
         map.fitBounds(boundsPoland);
@@ -112,47 +116,37 @@
             }
         }
 
-        function updateLegend(parameter) {
-            const legend = document.getElementById('legend-content');
-            let html = '';
+            function updateLegend(parameter) {
+                const legend = document.getElementById('legend-content');
+                let html = '';
+                const iconOrder = ['red', 'orange', 'yellow', 'green'];
 
-            switch (parameter) {
-                case 'temperature':
-                    html = `
-                        <div><img src="/icons/marker-icon-red.png" width="12"> >35°C (Bardzo gorąco)</div>
-                        <div><img src="/icons/marker-icon-orange.png" width="12"> 30–35°C (Gorąco)</div>
-                        <div><img src="/icons/marker-icon-yellow.png" width="12"> 20–30°C (Normalnie)</div>
-                        <div><img src="/icons/marker-icon-green.png" width="12"> <20°C (Chłodno)</div>`;
-                    break;
-                case 'humidity':
-                    html = `
-                        <div><img src="/icons/marker-icon-red.png" width="12"> <20% lub >80% (Niebezpieczne)</div>
-                        <div><img src="/icons/marker-icon-orange.png" width="12"> 20–30% (Niska)</div>
-                        <div><img src="/icons/marker-icon-green.png" width="12"> 30–60% (Optymalna)</div>
-                        <div><img src="/icons/marker-icon-yellow.png" width="12"> 60–80% (Wysoka)</div>`;
-                    break;
-                case 'pressure':
-                    html = `
-                        <div><img src="/icons/marker-icon-red.png" width="12"> <980 lub >1030 hPa</div>
-                        <div><img src="/icons/marker-icon-orange.png" width="12"> 980–990 hPa</div>
-                        <div><img src="/icons/marker-icon-green.png" width="12"> 990–1020 hPa</div>
-                        <div><img src="/icons/marker-icon-yellow.png" width="12"> 1020–1030 hPa</div>`;
-                    break;
-                case 'pm1':
-                case 'pm2_5':
-                case 'pm10':
-                    html = `
-                        <div><img src="/icons/marker-icon-green.png" width="12"> Dobry</div>
-                        <div><img src="/icons/marker-icon-yellow.png" width="12"> Akceptowalny</div>
-                        <div><img src="/icons/marker-icon-orange.png" width="12"> Umiarkowany</div>
-                        <div><img src="/icons/marker-icon-red.png" width="12"> Zły</div>`;
-                    break;
-                default:
-                    html = 'Brak opisu dla tego parametru';
+                if (parameter === 'temperature') {
+                    LEGEND_TEMPERATURE.forEach((text, i) => {
+                        const color = iconOrder[i] || 'grey';
+                        html += `<div><img src="/icons/marker-icon-${color}.png" width="12"> ${text}</div>`;
+                    });
+                } else if (parameter === 'humidity') {
+                    LEGEND_HUMIDITY.forEach((text, i) => {
+                        const color = iconOrder[i] || 'grey';
+                        html += `<div><img src="/icons/marker-icon-${color}.png" width="12"> ${text}</div>`;
+                    });
+                } else if (parameter === 'pressure') {
+                    LEGEND_PRESSURE.forEach((text, i) => {
+                        const color = iconOrder[i] || 'grey';
+                        html += `<div><img src="/icons/marker-icon-${color}.png" width="12"> ${text}</div>`;
+                    });
+                } else if (parameter === 'pm1' || parameter === 'pm2_5' || parameter === 'pm10') {
+                    LEGEND_PM.forEach((text, i) => {
+                        const color = ['green','yellow','orange','red'][i] || 'grey';
+                        html += `<div><img src="/icons/marker-icon-${color}.png" width="12"> ${text}</div>`;
+                    });
+                } else {
+                    html = @json(__('map.legend_none'));
+                }
+
+                legend.innerHTML = html;
             }
-
-            legend.innerHTML = html;
-        }
 
         function clearMarkers() {
             markers.forEach(marker => map.removeLayer(marker));
@@ -163,7 +157,7 @@
     clearMarkers();
     const datetime = document.getElementById('filterDatetime').value;
     const parameter = document.getElementById('parameterSelect').value;
-    if (!datetime || !parameter) return alert('Wybierz datę/czas i parametr!');
+    if (!datetime || !parameter) return alert(MSG_CHOOSE);
     updateLegend(parameter);
 
     fetch(`/api/devices/with-latest-values?parameter=${parameter}&datetime=${datetime}`)

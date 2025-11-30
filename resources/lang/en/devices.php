@@ -1,0 +1,68 @@
+<?php
+
+return [
+    'labels' => [
+        'create_form_title' => 'Create device',
+        'edit_form_title' => 'Edit device',
+    ],
+
+    'actions' => [
+        'create' => 'Create',
+        'edit' => 'Save changes',
+        'delete' => 'Delete',
+        'cancel' => 'Cancel',
+    ],
+
+    'attributes' => [
+        'name' => 'Device name',
+        'status' => 'Status',
+        'address' => 'Address',
+        'longitude' => 'Longitude',
+        'latitude' => 'Latitude',
+        'parameters' => 'Measured parameters',
+    ],
+    'measurements' => [
+        'measurements_for_device' => 'Measurements for device: :name',
+        'device_info' => 'Device information',
+        'report_issue' => 'Report problem',
+        'reason' => 'Reason',
+        'select_reason' => 'Choose reason',
+        'incorrect_data' => 'Incorrect data',
+        'device_offline' => 'Device is offline',
+        'other' => 'Other',
+        'description' => 'Description',
+        'optional_description' => 'Optional description...',
+        'cancel' => 'Cancel',
+        'send' => 'Send',
+        'parameters' => 'Parameters',
+        'unit' => 'Unit',
+        'value_type' => 'Type',
+        'measurements' => 'Measurements',
+        'date_time' => 'Date/Time',
+        'no_measurements' => 'No measurements for this device.',
+        'no_data' => 'No data',
+        'send_error' => 'Error while sending',
+    ],
+    'history' => [
+        'assignment_history_for_device' => 'Assignment history for device: :name',
+        'assigned_by' => 'Assigned by',
+        'assigned_to' => 'Assigned to',
+        'assigned_at' => 'Assigned at',
+        'unassigned_at' => 'Unassigned at',
+        'no_assignment_history' => 'No assignment history',
+    ],
+    'repairs' => [
+        'title_prefix' => 'Repairs & failures - ',
+        'back_to_devices' => '← Back to devices list',
+        'no_records' => 'No repair history records.',
+        'type' => [
+            'failure' => 'Failure',
+            'repair' => 'Repair',
+        ],
+        'type_heading' => 'Type',
+        'description' => 'Description',
+        'reported_at' => 'Reported at',
+        'resolved_at' => 'Resolved at',
+        'serviceman' => 'Serviceman',
+    ],
+];

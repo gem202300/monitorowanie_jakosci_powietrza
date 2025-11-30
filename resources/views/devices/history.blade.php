@@ -1,7 +1,7 @@
 <x-app-layout>
-    <x-slot name="header">
+        <x-slot name="header">
         <h2 class="text-xl font-semibold text-gray-800">
-            Historia przypisań urządzenia: {{ $device->name }}
+            {{ __('devices.history.assignment_history_for_device', ['name' => $device->name]) }}
         </h2>
     </x-slot>
 
@@ -10,10 +10,10 @@
             <table class="min-w-full table-auto border-collapse border border-gray-300">
                 <thead class="bg-gray-100">
                     <tr>
-                        <th class="border px-3 py-2 text-left">Kto przypisał</th>
-                        <th class="border px-3 py-2 text-left">Kogo przypisano</th>
-                        <th class="border px-3 py-2 text-left">Data przypisania</th>
-                        <th class="border px-3 py-2 text-left">Data odpisania</th>
+                        <th class="border px-3 py-2 text-left">{{ __('devices.history.assigned_by') }}</th>
+                        <th class="border px-3 py-2 text-left">{{ __('devices.history.assigned_to') }}</th>
+                        <th class="border px-3 py-2 text-left">{{ __('devices.history.assigned_at') }}</th>
+                        <th class="border px-3 py-2 text-left">{{ __('devices.history.unassigned_at') }}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,7 +26,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="border px-3 py-2 text-center">Brak historii przypisań</td>
+                            <td colspan="4" class="border px-3 py-2 text-center">{{ __('devices.history.no_assignment_history') }}</td>
                         </tr>
                     @endforelse
                 </tbody>

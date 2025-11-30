@@ -38,7 +38,9 @@ class ImportMeasurements extends Component
 
     public function render()
     {
+        // Render header partial and pass as HtmlString so Blade doesn't escape the HTML
+        $headerHtml = new \Illuminate\Support\HtmlString(view('partials.import-header')->render());
         return view('livewire.measurements.import-measurements')
-        ->layout('layouts.app');
+            ->layout('layouts.app', ['header' => $headerHtml]);
     }
 }

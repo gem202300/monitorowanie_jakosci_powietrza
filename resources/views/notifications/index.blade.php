@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-            <h2 class="text-xl font-semibold text-gray-800">Powiadomienia</h2>
+            <h2 class="text-xl font-semibold text-gray-800">{{ __('notifications.title') }}</h2>
         </div>
     </x-slot>
 
@@ -11,10 +11,11 @@
             <div class="mb-6 flex items-center justify-between gap-4">
                 <!-- Type filter (left) -->
                 <div class="flex items-center gap-3">
-                    <span class="text-sm text-gray-600 whitespace-nowrap">Filtruj wg typu:</span>
+                    <span
+                        class="text-sm text-gray-600 whitespace-nowrap">{{ __('notifications.filter_by_type') }}</span>
                     <div class="flex gap-2">
                         <a href="{{ route('notifications.index', array_filter(['date_from' => $dateFrom, 'date_to' => $dateTo])) }}"
-                            class="px-3 py-1 rounded border {{ empty($type) ? 'bg-gray-200' : 'border-gray-200' }}">Wszystkie</a>
+                            class="px-3 py-1 rounded border {{ empty($type) ? 'bg-gray-200' : 'border-gray-200' }}">{{ __('notifications.all') }}</a>
                         @foreach($types as $t)
                         <a href="{{ route('notifications.index', array_merge(['type' => $t], array_filter(['date_from' => $dateFrom, 'date_to' => $dateTo]))) }}"
                             class="px-3 py-1 rounded border {{ ($type === $t) ? 'bg-gray-200' : 'border-gray-200' }}">{{ ucfirst($t) }}</a>
@@ -28,23 +29,23 @@
                     <input type="hidden" name="type" value="{{ $type }}">
                     @endif
 
-                    <span class="text-sm text-gray-600 whitespace-nowrap">Od:</span>
+                    <span class="text-sm text-gray-600 whitespace-nowrap">{{ __('notifications.from') }}</span>
                     <input type="date" name="date_from" value="{{ $dateFrom }}"
                         class="border border-gray-400 rounded px-2 py-1 text-sm">
 
-                    <span class="text-sm text-gray-600 whitespace-nowrap">Do:</span>
+                    <span class="text-sm text-gray-600 whitespace-nowrap">{{ __('notifications.to') }}</span>
                     <input type="date" name="date_to" value="{{ $dateTo }}"
                         class="border border-gray-400 rounded px-2 py-1 text-sm">
 
                     <button type="submit"
                         class="bg-blue-500 text-white hover:bg-blue-600 px-4 py-1 rounded text-sm transition font-semibold">
-                        Filtruj
+                        {{ __('notifications.filter') }}
                     </button>
 
                     @if($dateFrom || $dateTo)
                     <a href="{{ route('notifications.index', array_filter(['type' => $type])) }}"
                         class="bg-gray-500 text-white hover:bg-gray-600 px-4 py-1 rounded text-sm transition font-semibold">
-                        Wyczyść
+                        {{ __('notifications.clear') }}
                     </a>
                     @endif
                 </form>
@@ -52,7 +53,7 @@
 
             @if($notifications->isEmpty())
             <div class="text-center py-12">
-                <p class="text-gray-500 text-lg">Brak powiadomień</p>
+                <p class="text-gray-500 text-lg">{{ __('notifications.none') }}</p>
             </div>
             @else
             <div class="space-y-4">
@@ -64,7 +65,7 @@
                             <div class="flex-1">
                                 <div class="flex items-center gap-2">
                                     <h3 class="font-semibold text-gray-900">
-                                        {{ $notification->data['title'] ?? 'Powiadomienie' }}
+                                        {{ $notification->data['title'] ?? __('notifications.default_title') }}
                                     </h3>
                                     @if(!empty($notification->data['type']))
                                     <span
@@ -74,17 +75,19 @@
                                     @endif
                                     @if(is_null($notification->read_at))
                                     <span class="inline-block bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
-                                        Nowe
+                                        {{ __('notifications.new_badge') }}
                                     </span>
                                     @endif
                                 </div>
                                 <p class="text-gray-700 mt-1">
-                                    {{ $notification->data['body'] ?? '' }}
+                                    {!! nl2br(e(str_replace('\n', "\n", $notification->data['body'] ?? ''))) !!}
                                 </p>
                                 @if(isset($notification->data['device_report_id']))
                                 <div class="mt-2 text-sm text-gray-600">
-                                    <p><strong>ID Raportu:</strong> #{{ $notification->data['device_report_id'] }}</p>
-                                    <p><strong>Urządzenie:</strong> ID {{ $notification->data['device_id'] }}</p>
+                                    <p><strong>{{ __('notifications.report_id') }}:</strong>
+                                        #{{ $notification->data['device_report_id'] }}</p>
+                                    <p><strong>{{ __('notifications.device_id') }}:</strong>
+                                        {{ $notification->data['device_id'] }}</p>
                                 </div>
                                 @endif
                                 <p class="text-xs text-gray-400 mt-2">
@@ -99,7 +102,7 @@
                                     @csrf
                                     <button type="submit"
                                         class="border border-gray-400 text-gray-700 hover:bg-gray-200 px-3 py-1 rounded text-sm transition">
-                                        Oznacz jako przeczytane
+                                        {{ __('notifications.mark_read') }}
                                     </button>
                                 </form>
                                 @endif
@@ -115,7 +118,7 @@
                 <form action="{{ route('notifications.markAllAsRead') }}" method="POST" class="inline">
                     @csrf
                     <button class="border border-gray-400 text-gray-700 hover:bg-gray-200 px-4 py-2 rounded transition">
-                        Oznacz wszystkie jako przeczytane
+                        {{ __('notifications.mark_all_read') }}
                     </button>
                 </form>
             </div>

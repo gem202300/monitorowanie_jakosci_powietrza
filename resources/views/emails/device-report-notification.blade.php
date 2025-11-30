@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nowe zgłoszenie dla urządzenia</title>
+    <title>{{ __('emails.device_report.title') }}</title>
     <style>
     body {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -123,10 +123,10 @@
 <body>
     <div class="email-container">
         <div class="header">
-            <h1>🔔 Nowe zgłoszenie dla urządzenia</h1>
+            <h1>{{ __('emails.device_report.title') }}</h1>
             @if(!empty($type))
-            <p style="margin-top:8px;font-size:13px;opacity:0.95">
-                <strong>Typ:</strong>
+                <p style="margin-top:8px;font-size:13px;opacity:0.95">
+                <strong>{{ __('emails.device_report.type_label') }}:</strong>
                 <span style="display:inline-block;padding:4px 10px;border-radius:12px;background-color:#fff;color:#333;font-weight:600;margin-left:8px;">
                     {{ strtoupper($type) }}
                 </span>
@@ -135,36 +135,36 @@
         </div>
 
         <div class="content">
-            <p class="greeting">Cześć {{ $serviceman_name }},</p>
-            <p>Zostało przesłane nowe zgłoszenie dotyczące urządzenia, za które odpowiadasz.</p>
+            <p class="greeting">{{ __('emails.greeting', ['name' => $serviceman_name]) }}</p>
+            <p>{{ __('emails.device_report.intro') }}</p>
 
             <div class="report-section">
-                <h3>Dane urządzenia</h3>
+                <h3>{{ __('emails.device_report.device_data') }}</h3>
                 <div class="report-item">
-                    <strong>Nazwa:</strong> {{ $device->name }}
+                    <strong>{{ __('emails.device_report.name') }}:</strong> {{ $device->name }}
                 </div>
                 <div class="report-item">
-                    <strong>Adres:</strong> {{ $device->address ?? 'Brak danych' }}
+                    <strong>{{ __('emails.device_report.address') }}:</strong> {{ $device->address ?? __('devices.measurements.no_data') }}
                 </div>
                 <div class="report-item">
-                    <strong>Status:</strong> {{ $device->status }}
+                    <strong>{{ __('emails.device_report.status') }}:</strong> {{ $device->status }}
                 </div>
             </div>
 
             <div class="report-section">
-                <h3>Szczegóły zgłoszenia</h3>
+                <h3>{{ __('emails.device_report.details') }}</h3>
                 <div class="report-item">
-                    <strong>Data zgłoszenia:</strong> {{ $deviceReport->created_at->format('d.m.Y H:i') }}
+                    <strong>{{ __('emails.device_report.reported_at') }}:</strong> {{ $deviceReport->created_at->format('d.m.Y H:i') }}
                 </div>
                 <div class="report-item">
-                    <strong>Zgłaszający:</strong> {{ $reporter->name }} ({{ $reporter->email }})
+                    <strong>{{ __('emails.device_report.reporter') }}:</strong> {{ $reporter->name }} ({{ $reporter->email }})
                 </div>
                 <div class="report-item">
-                    <strong>Powód:</strong> <span class="reason-badge">{{ $deviceReport->reason }}</span>
+                    <strong>{{ __('emails.device_report.reason') }}:</strong> <span class="reason-badge">{{ $deviceReport->reason }}</span>
                 </div>
                 @if($deviceReport->description)
                 <div class="report-item">
-                    <strong>Opis:</strong>
+                    <strong>{{ __('emails.device_report.description') }}:</strong>
                     <div class="description-box">
                         {{ $deviceReport->description }}
                     </div>
@@ -172,18 +172,18 @@
                 @endif
             </div>
 
-            <p>Prosimy o jak najszybką odpowiedź na to zgłoszenie.</p>
+            <p>{{ __('emails.device_report.please_respond') }}</p>
 
             <center>
                 <a href="{{ config('app.url') }}/device-reports" class="button">
-                    Przejdź do zgłoszeń
+                    {{ __('emails.device_report.go_to_reports') }}
                 </a>
             </center>
         </div>
 
         <div class="footer">
-            <p>To jest automatyczna wiadomość. Prosimy nie odpowiadać na ten email.</p>
-            <p>&copy; {{ date('Y') }} {{ config('app.name', 'Laravel') }}. Wszystkie prawa zastrzeżone.</p>
+            <p>{{ __('emails.email.auto_notice') }}</p>
+            <p>&copy; {{ date('Y') }} {{ config('app.name', 'Laravel') }}. {{ __('emails.email.copyright') }}</p>
         </div>
     </div>
 </body>

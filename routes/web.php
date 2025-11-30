@@ -86,7 +86,36 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
+    // Redirect legacy dashboard route to the map page — show map instead of dashboard
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return redirect()->route('map');
     })->name('dashboard');
 });
+
+// Locale switcher route - store in session and cookie, log selection and safely redirect back
+use Illuminate\Support\Facades\Log;
+use Illuminate\Http\RedirectResponse;
+
+Route::get('/locale/{locale}', function ($locale) {
+    $allowed = ['en', 'pl'];
+    if (in_array($locale, $allowed)) {
+        // Persist to session and cookie so it's available across requests (and subrequests)
+        session(['locale' => $locale]);
+        // Also set translator immediately for this request
+        app()->setLocale($locale);
+        Log::info('Locale switched', ['locale' => $locale, 'user_id' => auth()->id()]);
+
+        // Try to redirect back, if no referer fallback to map
+        $back = url()->previous();
+        $fallback = route('map');
+
+        $redirectTo = $back ?: $fallback;
+
+        /** @var RedirectResponse $resp */
+        $resp = redirect()->to($redirectTo)->with('status', __('locale.changed', ['locale' => strtoupper($locale)]));
+        // also include a long-lived cookie mirror for non-session contexts
+        return $resp->withCookie(cookie()->forever('locale', $locale));
+    }
+
+    return redirect()->back();
+})->name('locale.switch');

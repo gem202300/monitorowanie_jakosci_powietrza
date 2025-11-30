@@ -38,5 +38,8 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('viewPulse', function (User $user) {
             return $user->isAdmin();
         });
+
+        // Add middleware to web group which will set locale from session/cookie after cookies/session are available
+        \Illuminate\Support\Facades\Route::pushMiddlewareToGroup('web', \App\Http\Middleware\SetLocaleFromSessionOrCookie::class);
     }
 }

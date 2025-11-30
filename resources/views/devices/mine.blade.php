@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-            <h2 class="text-xl font-semibold text-gray-800">Moje urządzenia</h2>
+            <h2 class="text-xl font-semibold text-gray-800">{{ __('navigation.my_devices') }}</h2>
         </div>
     </x-slot>
 

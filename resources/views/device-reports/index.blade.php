@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="text-xl font-semibold text-gray-800">
-                Zgłoszenia serwisowe
+                {{ __('device_reports.title') }}
             </h2>
         </div>
     </x-slot>
