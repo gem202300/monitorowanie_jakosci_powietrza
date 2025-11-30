@@ -76,7 +76,10 @@
                             <tr>
                                 <th class="border p-2 text-left">{{ __('devices.measurements.date_time') }}</th>
                                 @foreach($parameters as $parameter)
-                                    <th class="border p-2 text-left">{{ $parameter->name }} ({{ $parameter->unit }})</th>
+                                    <th class="border p-2 text-left">
+                                        {{ __("parameters.labels.$parameter->name") !== "parameters.labels.$parameter->name" ? __("parameters.labels.$parameter->name") : $parameter->name }}
+                                        ({{ __("measurements.attributes.unit") }}: {{ $parameter->unit }})
+                                    </th>
                                 @endforeach
                             </tr>
                         </thead>

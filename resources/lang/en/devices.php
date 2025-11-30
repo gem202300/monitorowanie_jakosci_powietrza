@@ -14,12 +14,15 @@ return [
     ],
 
     'attributes' => [
+        'id' => 'ID',
         'name' => 'Device name',
         'status' => 'Status',
         'address' => 'Address',
         'longitude' => 'Longitude',
         'latitude' => 'Latitude',
         'parameters' => 'Measured parameters',
+        'created_at' => 'Created At',
+        'actions' => 'Actions',
     ],
     'measurements' => [
         'measurements_for_device' => 'Measurements for device: :name',

@@ -99,25 +99,25 @@ final class DeviceTable extends PowerGridComponent
     public function columns(): array
     {
         return [
-            Column::make(__('ID'), 'id')->sortable()->searchable(),
-            Column::make(__('Nazwa'), 'name')->sortable()->searchable(),
-            Column::make(__('Status'), 'status')->sortable()->searchable(),
-            Column::make(__('Adres'), 'address')->sortable()->searchable(),
-            Column::make(__('Długość geograficzna'), 'longitude')->sortable()->searchable(),
-            Column::make(__('Szerokość geograficzna'), 'latitude')->sortable()->searchable(),
-            Column::make(__('Utworzono'), 'created_at_formatted', 'created_at')->sortable(),
-            Column::action(__('Akcje')),
+            Column::make(__('devices.attributes.id'), 'id')->sortable()->searchable(),
+            Column::make(__('devices.attributes.name'), 'name')->sortable()->searchable(),
+            Column::make(__('devices.attributes.status'), 'status')->sortable()->searchable(),
+            Column::make(__('devices.attributes.address'), 'address')->sortable()->searchable(),
+            Column::make(__('devices.attributes.longitude'), 'longitude')->sortable()->searchable(),
+            Column::make(__('devices.attributes.latitude'), 'latitude')->sortable()->searchable(),
+            Column::make(__('devices.attributes.created_at'), 'created_at_formatted', 'created_at')->sortable(),
+            Column::action(__('devices.attributes.actions')),
         ];
     }
 
     public function filters(): array
     {
         return [
-            Filter::inputText('name')->placeholder('Nazwa')->operators(['contains']),
-            Filter::inputText('status')->placeholder('Status')->operators(['contains']),
-            Filter::inputText('address')->placeholder('Adres')->operators(['contains']),
-            Filter::inputText('longitude')->placeholder('Długość geograficzna')->operators(['contains']),
-            Filter::inputText('latitude')->placeholder('Szerokość geograficzna')->operators(['contains']),
+            Filter::inputText('name')->placeholder(__('translation.placeholder.enter'))->operators(['contains']),
+            Filter::inputText('status')->placeholder(__('translation.placeholder.enter'))->operators(['contains']),
+            Filter::inputText('address')->placeholder(__('translation.placeholder.enter'))->operators(['contains']),
+            Filter::inputText('longitude')->placeholder(__('translation.placeholder.enter'))->operators(['contains']),
+            Filter::inputText('latitude')->placeholder(__('translation.placeholder.enter'))->operators(['contains']),
             Filter::datetimepicker('created_at', 'created_at'),
         ];
     }

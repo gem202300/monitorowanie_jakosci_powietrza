@@ -14,7 +14,7 @@ use App\Livewire\Measurements\ImportMeasurements;
 use App\Http\Controllers\Admin\ServicemanController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('map');
 });
 
 Route::middleware(['auth'])->group(function () {

@@ -37,12 +37,15 @@ return [
     ],
 
     'attributes' => [
+        'id'         => 'ID',
         'name'       => 'Nazwa urządzenia',
         'status'     => 'Status',
         'address'    => 'Adres',
         'longitude'  => 'Długość geograficzna',
         'latitude'   => 'Szerokość geograficzna',
         'parameters' => 'Mierzone parametry',
+        'created_at' => 'Data utworzenia',
+        'actions'    => 'Akcje',
     ],
 
     'measurements' => [
