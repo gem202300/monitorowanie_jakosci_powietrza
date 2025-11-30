@@ -32,8 +32,6 @@ class ImportMeasurements extends Component
 
         // Запускаємо фонову задачу
         ImportMeasurementsJob::dispatch(storage_path("app/{$path}"), auth()->id());
-
-        $this->successMessage = 'Імпорт запущено! Прогрес зʼявиться нижче.';
     }
 
     public function render()
