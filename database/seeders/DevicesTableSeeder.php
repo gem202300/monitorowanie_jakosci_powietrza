@@ -62,7 +62,7 @@ class DevicesTableSeeder extends Seeder
                     default => 'nieznany',
                 },
                 'reason'      => 'Initial status on creation',
-                'changed_at'  => now(),
+                'changed_at'  => now()->subDays(3),
             ]);
 
          

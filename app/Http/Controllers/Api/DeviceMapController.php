@@ -11,43 +11,65 @@ use App\Http\Controllers\Controller;
 class DeviceMapController extends Controller
 {
     public function index(Request $request)
-    {
-        $parameter = $request->get('parameter', 'temperature');
-        $datetime = $request->get('datetime', now());
+{
+    $parameter = $request->get('parameter', 'temperature');
+    $datetime = $request->get('datetime'); 
+
+    if ($datetime) {
         $datetime = Carbon::parse($datetime);
         $oneHourAgo = $datetime->copy()->subHour();
-
-        $devices = Device::whereHas('parameters', fn($q) =>
-                $q->where('name', $parameter)
-            )
-            ->with(['parameters' => fn($q) => $q->where('name', $parameter)])
-            ->get()
-            ->map(function ($device) use ($parameter, $datetime, $oneHourAgo) {
-                $measurement = $device->measurements()
-                    ->whereBetween('date_time', [$oneHourAgo, $datetime])
-                    ->orderByDesc('date_time')
-                    ->first();
-
-                if (!$measurement) return null;
-
-                $value = DB::table('measurement_values')
-                    ->where('measurement_id', $measurement->id)
-                    ->join('parameters', 'measurement_values.parameter_id', '=', 'parameters.id')
-                    ->where('parameters.name', $parameter)
-                    ->value('value');
-
-                return $value !== null ? [
-                    'id' => $device->id,
-                    'name' => $device->name,
-                    'latitude' => $device->latitude,
-                    'longitude' => $device->longitude,
-                    'value' => $value,
-                    'parameter' => $parameter,
-                ] : null;
-            })
-            ->filter()
-            ->values();
-
-        return response()->json($devices);
     }
+
+    $devices = Device::with(['parameters' => fn($q) => 
+        $q->where('name', $parameter)
+    ])->get();
+
+    $result = [];
+
+    foreach ($devices as $device) {
+
+        $measurementQuery = $device->measurements()
+            ->orderByDesc('date_time');
+
+        if ($datetime) {
+            $measurementQuery->whereBetween('date_time', [$oneHourAgo, $datetime]);
+        }
+
+        $measurement = $measurementQuery->first();
+
+        if (!$measurement) continue;
+
+        $status = DB::table('device_status_histories')
+            ->where('device_id', $device->id)
+            ->where('changed_at', '<=', $measurement->date_time)
+            ->orderByDesc('changed_at')
+            ->value('to_status');
+
+        if ($status !== 'aktywny') {
+            continue; 
+        }
+
+        $value = DB::table('measurement_values')
+            ->where('measurement_id', $measurement->id)
+            ->join('parameters', 'measurement_values.parameter_id', '=', 'parameters.id')
+            ->where('parameters.name', $parameter)
+            ->value('value');
+
+        if ($value === null) continue;
+
+        $result[] = [
+            'id' => $device->id,
+            'name' => $device->name,
+            'latitude' => $device->latitude,
+            'longitude' => $device->longitude,
+            'value' => $value,
+            'parameter' => $parameter,
+            'timestamp' => $measurement->date_time,
+        ];
+    }
+
+    return response()->json($result);
+}
+
+
 }
