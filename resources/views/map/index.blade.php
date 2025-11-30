@@ -1,6 +1,6 @@
-<x-app-layout>
-    <div id="map-container" style="position: relative; width: 100vw; height: 95vh; overflow: hidden;">
-        <div id="map" style="width: 100%; height: 100%;"></div>
+<x-app-layout class="map-layout">
+    <div id="map-container" style="position: relative; width: 100vw; height: calc(100vh - 64px); overflow: hidden;">
+  <div id="map" style="width: 100%; height: 100%;"></div>
 
         <!-- PRZYCISK FILTRA -->
         <button id="toggleFilter"
@@ -235,4 +235,23 @@
             exitIcon.style.display = fs ? 'block' : 'none';
         });
     </script>
+    <style>
+    header {
+        position: relative !important;
+        z-index: 5000 !important;
+    }
+    body, html {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    #map-container {
+        width: 100vw;
+        height: calc(100vh - 64px); 
+        overflow: hidden;
+        position: relative !important;
+        z-index: 1 !important;
+    }
+    </style>
 </x-app-layout>
