@@ -66,7 +66,9 @@ class DevicesTableSeeder extends Seeder
             ]);
 
          
-            $servicemen = User::role(RoleType::SERWISANT->value)->get();
+            $servicemen = User::role(RoleType::SERWISANT->value)
+            ->whereNotIn('id', [1, 2, 3])
+            ->get();
 
             if ($servicemen->isNotEmpty()) {
                 $serviceman = $servicemen->random();

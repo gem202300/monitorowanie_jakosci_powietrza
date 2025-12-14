@@ -39,7 +39,7 @@ class RoleSeeder extends Seeder
         $userRole->givePermissionTo(PermissionType::SERWISANT_DEVICE_MANAGE->value);
         //$userRole->givePermissionTo(PermissionType::RESERBATION_ACCESS->value);
         //$userRole->givePermissionTo(PermissionType::RESERBATION_MANAGE->value);
-        // PRACOWNIK
+        
         // SERWISANT
         $userRole = Role::findByName(RoleType::SERWISANT->value);
         $userRole->givePermissionTo(PermissionType::DEVICE_ACCESS->value);
