@@ -9,6 +9,7 @@ return [
     'servicemen' => 'Servicemen',
     'all_devices' => 'All devices',
     'my_devices' => 'My devices',
+    'service_reports' => 'Service reports',
     'map' => 'Map',
     'notifications' => 'Notifications',
     'manage_team' => 'Manage Team',

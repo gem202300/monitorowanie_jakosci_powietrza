@@ -44,6 +44,10 @@
                     <x-nav-link href="{{ route('devices.mine') }}" :active="request()->routeIs('devices.mine')">
                         {{ __('navigation.my_devices') }}
                     </x-nav-link>
+
+                    <x-nav-link href="{{ route('service-reports.index') }}" :active="request()->routeIs('service-reports.*')">
+                        {{ __('navigation.service_reports') }}
+                    </x-nav-link>
                     @endif
 
                     <!-- Посилання на мапу для всіх -->
@@ -251,6 +255,10 @@
 
             <x-responsive-nav-link href="{{ route('devices.mine') }}" :active="request()->routeIs('devices.mine')">
                 {{ __('navigation.my_devices') }}
+            </x-responsive-nav-link>
+
+            <x-responsive-nav-link href="{{ route('service-reports.index') }}" :active="request()->routeIs('service-reports.*')">
+                {{ __('navigation.service_reports') }}
             </x-responsive-nav-link>
             @endif
 

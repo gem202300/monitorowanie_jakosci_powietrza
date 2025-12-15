@@ -10,7 +10,7 @@ class DeviceReport extends Model
     use HasFactory;
 
     protected $fillable = [
-        'device_id', 'user_id', 'reason', 'description'
+        'device_id', 'user_id', 'reason', 'description', 'notes'
     ];
 
     public function device()

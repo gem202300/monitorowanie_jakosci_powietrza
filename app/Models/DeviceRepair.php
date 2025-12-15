@@ -11,6 +11,7 @@ class DeviceRepair extends Model
 
     protected $fillable = [
         'device_id',
+        'device_report_id',
         'user_id',
         'type',
         'description',
@@ -31,5 +32,10 @@ class DeviceRepair extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function deviceReport()
+    {
+        return $this->belongsTo(DeviceReport::class);
     }
 }

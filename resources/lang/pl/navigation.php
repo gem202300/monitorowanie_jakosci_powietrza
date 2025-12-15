@@ -9,6 +9,7 @@ return [
     'servicemen' => 'Serwisanci',
     'all_devices' => 'Wszystkie urządzenia',
     'my_devices' => 'Moje urządzenia',
+    'service_reports' => 'Zgłoszenia serwisowe',
     'map' => 'Mapa',
     'notifications' => 'Powiadomienia',
     'manage_team' => 'Zarządzanie zespołem',

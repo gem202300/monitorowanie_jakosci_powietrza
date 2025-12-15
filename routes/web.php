@@ -12,6 +12,7 @@ use App\Http\Controllers\DeviceReportController;
 use App\Http\Controllers\NotificationController;
 use App\Livewire\Measurements\ImportMeasurements;
 use App\Http\Controllers\Admin\ServicemanController;
+use App\Http\Controllers\ServiceReportsController;
 
 Route::get('/', function () {
     return redirect()->route('map');
@@ -77,6 +78,15 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['auth'])->group(function () {
         Route::get('/device-reports', [DeviceReportController::class, 'index'])
             ->name('device-reports.index');
+    });
+
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/service-reports', [ServiceReportsController::class, 'index'])
+            ->name('service-reports.index');
+        Route::get('/service-reports/device/{device}', [ServiceReportsController::class, 'show'])
+            ->name('service-reports.show');
+        Route::post('/service-reports/device/{device}/resolve', [ServiceReportsController::class, 'resolve'])
+            ->name('service-reports.resolve');
     });
 });
 
