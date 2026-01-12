@@ -21,9 +21,5 @@ $notifications = [
     ['title' => 'New Message 3', 'body' => 'This is the third test notification.'],
 ];
 
-foreach ($notifications as $data) {
-    $admin->notify(new \App\Notifications\GenericNotification($data));
-}
-
     }
 }
